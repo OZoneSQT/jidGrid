@@ -12,6 +12,7 @@
 
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
+             How to: type "signingreport" in gradle search promt
 
              To get one, follow the directions here:
 
@@ -23,7 +24,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
+            android:value="AIzaSyCLvYlil_rbF1AAvajEnrNOh4Z-DO81fgI" />
 
         <activity
             android:name=".MapsActivity"

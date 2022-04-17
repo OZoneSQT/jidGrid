@@ -1,0 +1,41 @@
+API key:			AIzaSyCLvYlil_rbF1AAvajEnrNOh4Z-DO81fgI
+
+NEW 18/4-2022
+How to: type "signingreport" in gradle search promt
+
+
+00.42.06: Executing task 'signingreport'...
+
+Executing tasks: [signingreport] in project D:\GitHub\jidGrid\JidGrid
+
+
+> Task :app:signingReport
+Variant: debug
+Config: debug
+Store: C:\Users\skrue\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 28:9F:D6:E4:FD:DB:A9:0D:BD:C6:87:EB:9B:F6:EE:8D
+SHA1: F8:3F:18:4E:18:80:B6:2A:37:CD:4C:70:07:72:93:D4:78:27:BA:27
+SHA-256: 5B:69:CA:61:66:94:A0:A9:29:9F:41:DD:4B:F2:F0:06:34:EF:0E:B0:F4:75:AA:B6:98:66:99:51:12:1C:C5:BD
+Valid until: Wednesday, January 17, 2052
+----------
+Variant: release
+Config: null
+Store: null
+Alias: null
+----------
+Variant: debugAndroidTest
+Config: debug
+Store: C:\Users\skrue\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 28:9F:D6:E4:FD:DB:A9:0D:BD:C6:87:EB:9B:F6:EE:8D
+SHA1: F8:3F:18:4E:18:80:B6:2A:37:CD:4C:70:07:72:93:D4:78:27:BA:27
+SHA-256: 5B:69:CA:61:66:94:A0:A9:29:9F:41:DD:4B:F2:F0:06:34:EF:0E:B0:F4:75:AA:B6:98:66:99:51:12:1C:C5:BD
+Valid until: Wednesday, January 17, 2052
+----------
+
+BUILD SUCCESSFUL in 2s
+1 actionable task: 1 executed
+
+Build Analyzer results available
+00.42.10: Task execution finished 'signingreport'.
