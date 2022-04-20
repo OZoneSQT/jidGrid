@@ -1,5 +1,3 @@
-API key:			AIzaSyCLvYlil_rbF1AAvajEnrNOh4Z-DO81fgI
-
 NEW 18/4-2022
 How to: type "signingreport" in gradle search promt
 
