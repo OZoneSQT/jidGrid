@@ -12,7 +12,6 @@
 
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
-             How to: type "signingreport" in gradle search promt
 
              To get one, follow the directions here:
 
@@ -21,10 +20,15 @@
              Once you have your API key (it starts with "AIza"), define a new property in your
              project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
              "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
+
+             To protect key: type "signingreport" in gradle search promt, use SHA1 key in Google Console to protect key to app packet
+
+             To hide api key on GitHub: Settings => Environments => Add Enviorment => creat Secrets
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCLvYlil_rbF1AAvajEnrNOh4Z-DO81fgI" />
+            android:value="GOOGLE_MAPS_API_KEY" />
+            <!-- android:value=GOOGLE_MAPS_API_KEY /> -->
 
         <activity
             android:name=".MapsActivity"
