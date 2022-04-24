@@ -2,6 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dk.seahawk.jidgrid">
 
+    <!-- Always include this permission -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Include only if your app benefits from precise location access. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,6 +30,8 @@
 
                 https://developers.google.com/maps/documentation/android-sdk/get-api-key
 
+                https://console.cloud.google.com/apis/credentials?project=jidgrid
+
              Once you have your API key (it starts with "AIza"), define a new property in your
              project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
              "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
@@ -27,8 +42,8 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="GOOGLE_MAPS_API_KEY" />
-            <!-- android:value=GOOGLE_MAPS_API_KEY /> -->
+            android:value="${MAPS_API_KEY}" />
+            <!-- Hide API-keys from GitHub https://developers.google.cn/maps/documentation/android-sdk/secrets-gradle-plugin -->
 
         <activity
             android:name=".MapsActivity"
