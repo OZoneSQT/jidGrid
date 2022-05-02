@@ -21,6 +21,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.CancellationToken;
+import com.google.android.gms.tasks.CancellationTokenSource;
 import com.google.android.gms.tasks.Task;
 
 import dk.seahawk.jidgrid.databinding.ActivityMapsBinding;
@@ -35,6 +37,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public Location location = null;
     private FusedLocationProviderClient fusedLocationClient;
 
+    // https://developers.google.com/android/reference/com/google/android/gms/tasks/CancellationToken
+    CancellationTokenSource cancellationToken;
+
     // https://developer.android.com/training/location/permissions
     // https://developer.android.com/training/location/retrieve-current.html#java
 
@@ -42,12 +47,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     // https://developer.android.com/training/location/request-updates
     // https://developer.android.com/training/location/retrieve-current.html
 
+    // Lifecycles
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // set lifecycle token for "running" requests for an updated location
+        cancellationToken = new CancellationTokenSource();
+
+        // https://developers.google.com/android/reference/com/google/android/gms/tasks/CancellationToken
+        // That source's token can be passed to multiple calls.
+        // doSomethingCancellable(cancellationToken.getToken()).onSuccessTask(result -> doSomethingElse(result, cancellationToken.getToken()));
 
         // Location
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -60,8 +73,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
+    protected  void  onStart(){
+        super.onStart();
+
+        // set lifecycle token for "running" requests for an updated location
+        cancellationToken = new CancellationTokenSource();
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
+
+        // set lifecycle token for "running" requests for an updated location
+        cancellationToken = new CancellationTokenSource();
 
         // Location
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -72,6 +97,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onPause() {
         super.onPause();
+        cancellationToken.cancel(); // Stop request for updated location
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        cancellationToken.cancel(); // Stop request for updated location
     }
 
     /**
@@ -123,8 +155,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // https://stackoverflow.com/questions/44992014/how-to-get-current-location-in-googlemap-using-fusedlocationproviderclient
         // https://github.com/DeLaSalleUniversity-Manila/getcurrentlocation-BananaSpoon/blob/master/app/src/main/java/com/christian/mylocation/MapsActivity.java
 
-        locationTask = fusedLocationClient.getCurrentLocation().addOnSuccessListener(location -> updateLocation(location));
-        locationTask = fusedLocationClient.getCurrentLocation().addOnFailureListener(e -> Toast.makeText(context,"Something went wrong "+e.getMessage(),Toast.LENGTH_SHORT).show()); // GPS off
+        locationTask = fusedLocationClient.getCurrentLocation(2, cancellationToken.getToken()).addOnSuccessListener(location -> updateLocation(location));
+        locationTask = fusedLocationClient.getCurrentLocation(2, cancellationToken.getToken()).addOnFailureListener(e -> Toast.makeText(context,"Something went wrong "+e.getMessage(),Toast.LENGTH_SHORT).show()); // GPS off
     }
 
     // Note:
