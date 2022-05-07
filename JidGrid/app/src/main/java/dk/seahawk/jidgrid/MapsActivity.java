@@ -1,6 +1,6 @@
 package dk.seahawk.jidgrid;
 
-import androidx.annotation.NonNull;
+
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
@@ -11,21 +11,28 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.CancellationToken;
 import com.google.android.gms.tasks.CancellationTokenSource;
 import com.google.android.gms.tasks.Task;
 
 import dk.seahawk.jidgrid.databinding.ActivityMapsBinding;
+
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -36,6 +43,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     // Location
     public Location location = null;
     private FusedLocationProviderClient fusedLocationClient;
+    private Task<LocationSettingsResponse> locationSettingsResponseTask;
+
+    // Define the location update callback
+    private LocationRequest locationRequest;    //TODO Init location request
+    private LocationCallback locationCallback;
+    private boolean requestingLocationUpdates = false;
 
     // https://developers.google.com/android/reference/com/google/android/gms/tasks/CancellationToken
     CancellationTokenSource cancellationToken;
@@ -66,18 +79,49 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         checkPermission();
 
+        //TODO set boolean requestingLocationUpdates true
+        if(requestingLocationUpdates) startLocationUpdates(locationRequest);
+
+
+        this.locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    // Update UI with location data
+                    // ...
+                }
+            }
+        };
+
+
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
+    /*
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
+
+        SettingsClient client = LocationServices.getSettingsClient(this);
+        locationSettingsResponseTask = client.checkLocationSettings(builder.build());
+     */
+
+
     @Override
-    protected  void  onStart(){
+    protected void onStart(){
         super.onStart();
 
         // set lifecycle token for "running" requests for an updated location
         cancellationToken = new CancellationTokenSource();
+
+        //TODO set boolean requestingLocationUpdates true
+        if(requestingLocationUpdates) startLocationUpdates(locationRequest);
 
     }
 
@@ -85,25 +129,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onResume() {
         super.onResume();
 
-        // set lifecycle token for "running" requests for an updated location
+        // set lifecycle token for "running" (stopping) requests for an updated location
         cancellationToken = new CancellationTokenSource();
 
         // Location
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         checkPermission();
 
+        //TODO set boolean requestingLocationUpdates true
+        if(requestingLocationUpdates) startLocationUpdates(locationRequest);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         cancellationToken.cancel(); // Stop request for updated location
+        stopLocationUpdates();
     }
 
     @Override
     protected void onStop(){
         super.onStop();
         cancellationToken.cancel(); // Stop request for updated location
+        stopLocationUpdates();
     }
 
     /**
@@ -168,95 +216,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         this.location = location;
     }
 
-
-
-/*
-    // Change location settings
-    // https://developer.android.com/training/location/change-location-settings.html
-
-    protected void createLocationRequest() {
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(5000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        // locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY); // accuracy of approximately 100 meters
+    // Request location updates
+    // https://developer.android.com/training/location/request-updates#java
+    @SuppressLint("MissingPermission")
+    private void startLocationUpdates(LocationRequest locationRequest) {
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
     }
 
-    LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-     .addLocationRequest(locationRequest);
-
-
-    LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
-    // ...
-    SettingsClient client = LocationServices.getSettingsClient(this);
-    Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
-
-
-*/
-
-/*
-// Request location updates
-// https://developer.android.com/training/location/request-updates#java
-
-
-// Make a location request
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (requestingLocationUpdates) {
-            startLocationUpdates();
-        }
-    }
-
-    private void startLocationUpdates() {
-        fusedLocationClient.requestLocationUpdates(locationRequest,
-                locationCallback,
-                Looper.getMainLooper());
-    }
-
-
-// Define the location update callback
-private LocationCallback locationCallback;
-
-// ...
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        // ...
-
-        locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                if (locationResult == null) {
-                    return;
-                }
-                for (Location location : locationResult.getLocations()) {
-                    // Update UI with location data
-                    // ...
-                }
-            }
-        };
-    }
-
-
-// Stop location updates
-    @Override
-    protected void onPause() {
-        super.onPause();
-        stopLocationUpdates();
-    }
-
+    // Stop location updates
     private void stopLocationUpdates() {
         fusedLocationClient.removeLocationUpdates(locationCallback);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (requestingLocationUpdates) {
-            startLocationUpdates();
-        }
+    // Change location settings
+    // https://developer.android.com/training/location/change-location-settings.html
+    protected void createLocationRequest() {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(5 * 60 * 1000);  // 5 minute (default = 10 second)
+        locationRequest.setFastestInterval(1 * 60 * 1000);  // 1 minute (default = 5 second)
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);    // High accuracy is important for the use of the app, but when in use the update frequency is less important
+        // locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);   // accuracy of approximately 100 meters
     }
-*/
+
 
 }
