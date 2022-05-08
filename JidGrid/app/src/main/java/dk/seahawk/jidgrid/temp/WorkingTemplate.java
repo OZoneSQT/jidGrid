@@ -1,4 +1,4 @@
-package dk.seahawk.jidgrid;
+package dk.seahawk.jidgrid.temp;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -93,6 +93,7 @@ public class WorkingTemplate extends AppCompatActivity {
     }
 
 
+    @SuppressLint("MissingPermission")
     private void startGettingLocation() {
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)== PackageManager.PERMISSION_GRANTED){

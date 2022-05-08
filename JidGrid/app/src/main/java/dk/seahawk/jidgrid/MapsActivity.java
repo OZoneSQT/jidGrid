@@ -1,66 +1,44 @@
 package dk.seahawk.jidgrid;
 
-
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.CancellationTokenSource;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import dk.seahawk.jidgrid.databinding.ActivityMapsBinding;
-
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
-    private Context context;
 
-    // Location
-    public Location location = null;
-    private FusedLocationProviderClient fusedLocationClient;
-    private Task<LocationSettingsResponse> locationSettingsResponseTask;
+    private Location currentLocation;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private static final int REQUEST_CODE = 101;
 
-    // Define the location update callback
-    private LocationRequest locationRequest;    //TODO Init location request
-    private LocationCallback locationCallback;
-    private boolean requestingLocationUpdates = false;
-
-    // https://developers.google.com/android/reference/com/google/android/gms/tasks/CancellationToken
-    CancellationTokenSource cancellationToken;
-
-    // https://developer.android.com/training/location/permissions
-    // https://developer.android.com/training/location/retrieve-current.html#java
-
-    // https://developer.android.com/training/location/change-location-settings.html
-    // https://developer.android.com/training/location/request-updates
-    // https://developer.android.com/training/location/retrieve-current.html
-
-    // Lifecycles
+    private boolean locationPermissionGranted = false;
+    /**
+     * Lifecycles
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,91 +46,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // set lifecycle token for "running" requests for an updated location
-        cancellationToken = new CancellationTokenSource();
-
-        // https://developers.google.com/android/reference/com/google/android/gms/tasks/CancellationToken
-        // That source's token can be passed to multiple calls.
-        // doSomethingCancellable(cancellationToken.getToken()).onSuccessTask(result -> doSomethingElse(result, cancellationToken.getToken()));
-
-        // Location
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        checkPermission();
-
-        //TODO set boolean requestingLocationUpdates true
-        if(requestingLocationUpdates) startLocationUpdates(locationRequest);
-
-
-        this.locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                if (locationResult == null) {
-                    return;
-                }
-                for (Location location : locationResult.getLocations()) {
-                    // Update UI with location data
-                    // ...
-                }
-            }
-        };
-
-
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        fetchLocation();
     }
 
-    /*
-
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
-
-        SettingsClient client = LocationServices.getSettingsClient(this);
-        locationSettingsResponseTask = client.checkLocationSettings(builder.build());
-     */
-
-
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
-
-        // set lifecycle token for "running" requests for an updated location
-        cancellationToken = new CancellationTokenSource();
-
-        //TODO set boolean requestingLocationUpdates true
-        if(requestingLocationUpdates) startLocationUpdates(locationRequest);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        // set lifecycle token for "running" (stopping) requests for an updated location
-        cancellationToken = new CancellationTokenSource();
-
-        // Location
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        checkPermission();
-
-        //TODO set boolean requestingLocationUpdates true
-        if(requestingLocationUpdates) startLocationUpdates(locationRequest);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        cancellationToken.cancel(); // Stop request for updated location
-        stopLocationUpdates();
     }
 
     @Override
     protected void onStop(){
         super.onStop();
-        cancellationToken.cancel(); // Stop request for updated location
-        stopLocationUpdates();
     }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+    }
+
 
     /**
      * Manipulates the map once available.
@@ -168,75 +95,141 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
+
+        // LatLng sydney = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
         LatLng sydney = new LatLng(-34, 151);
+
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+
+
+        // Turn on the My Location layer and the related control on the map.
+        updateLocationUI();
+
+        // Get the current location of the device and set the position of the map.
+        getDeviceLocation();
+
+
+
+
+
+
+
+
     }
 
-    // Permission request
-    // https://developer.android.com/training/location/permissions#java
-    private void checkPermission() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-            getLocation();
-
-        //request for the user to give the consent to access
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
+    private void fetchLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+            return;
+        }
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(location -> {
+            if (location != null) {
+                currentLocation = location;
+                Toast.makeText(getApplicationContext(), currentLocation.getLatitude() + "" + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    // getLastLocation() gets a location estimate more quickly and minimizes battery usage that can be attributed to your app.
-    // However, the location information might be out of date, if no other clients have actively used location recently.
-    @SuppressLint("MissingPermission")
-    private void getLocation() {
-        fusedLocationClient.getLastLocation().addOnSuccessListener(location -> updateLocation(location));
-        fusedLocationClient.getLastLocation().addOnFailureListener(e -> Toast.makeText(context,"Something went wrong "+e.getMessage(),Toast.LENGTH_SHORT).show()); // GPS off
+
+    private void getLocationPermission() {
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+         */
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            locationPermissionGranted = true;
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
     }
 
-    // getCurrentLocation() gets a fresher, more accurate location more consistently. However, this method can cause active location computation to occur on the device
-    @SuppressLint("MissingPermission")
-    private void getCurrentLocation() {
-        Task<Location> locationTask = null;
-        // https://stackoverflow.com/questions/44992014/how-to-get-current-location-in-googlemap-using-fusedlocationproviderclient
-        // https://github.com/DeLaSalleUniversity-Manila/getcurrentlocation-BananaSpoon/blob/master/app/src/main/java/com/christian/mylocation/MapsActivity.java
 
-        locationTask = fusedLocationClient.getCurrentLocation(2, cancellationToken.getToken()).addOnSuccessListener(location -> updateLocation(location));
-        locationTask = fusedLocationClient.getCurrentLocation(2, cancellationToken.getToken()).addOnFailureListener(e -> Toast.makeText(context,"Something went wrong "+e.getMessage(),Toast.LENGTH_SHORT).show()); // GPS off
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        locationPermissionGranted = false;
+        if (requestCode
+                == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {// If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                locationPermissionGranted = true;
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+        updateLocationUI();
     }
 
-    // Note:
-    // This is the recommended way to get a fresh location, whenever possible, and is safer than alternatives like starting and managing location updates yourself using
-    // requestLocationUpdates(). If your app calls requestLocationUpdates(), your app can sometimes consume large amounts of power if location isn't available, or if
-    // the request isn't stopped correctly after obtaining a fresh location.
 
-    private void updateLocation(Location location){
-        this.location = location;
+    private void updateLocationUI() {
+        if (map == null) {
+            return;
+        }
+        try {
+            if (locationPermissionGranted) {
+                map.setMyLocationEnabled(true);
+                map.getUiSettings().setMyLocationButtonEnabled(true);
+            } else {
+                map.setMyLocationEnabled(false);
+                map.getUiSettings().setMyLocationButtonEnabled(false);
+                lastKnownLocation = null;
+                getLocationPermission();
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage());
+        }
     }
 
-    // Request location updates
-    // https://developer.android.com/training/location/request-updates#java
-    @SuppressLint("MissingPermission")
-    private void startLocationUpdates(LocationRequest locationRequest) {
-        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
+    private void getDeviceLocation() {
+        /*
+         * Get the best and most recent location of the device, which may be null in rare
+         * cases when a location is not available.
+         */
+        try {
+            if (locationPermissionGranted) {
+                Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
+                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful()) {
+                            // Set the map's camera position to the current location of the device.
+                            lastKnownLocation = task.getResult();
+                            if (lastKnownLocation != null) {
+                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                        new LatLng(lastKnownLocation.getLatitude(),
+                                                lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                            }
+                        } else {
+                            Log.d(TAG, "Current location is null. Using defaults.");
+                            Log.e(TAG, "Exception: %s", task.getException());
+                            map.moveCamera(CameraUpdateFactory
+                                    .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
+                            map.getUiSettings().setMyLocationButtonEnabled(false);
+                        }
+                    }
+                });
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage(), e);
+        }
     }
 
-    // Stop location updates
-    private void stopLocationUpdates() {
-        fusedLocationClient.removeLocationUpdates(locationCallback);
-    }
 
-    // Change location settings
-    // https://developer.android.com/training/location/change-location-settings.html
-    protected void createLocationRequest() {
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(5 * 60 * 1000);  // 5 minute (default = 10 second)
-        locationRequest.setFastestInterval(1 * 60 * 1000);  // 1 minute (default = 5 second)
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);    // High accuracy is important for the use of the app, but when in use the update frequency is less important
-        // locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);   // accuracy of approximately 100 meters
-    }
+
+
+
+
 
 
 }
