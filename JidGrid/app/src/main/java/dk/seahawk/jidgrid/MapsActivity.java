@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -170,31 +171,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-/*
+
     // Change location settings
     // https://developer.android.com/training/location/change-location-settings.html
-
     protected void createLocationRequest() {
         LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(5000);
+        locationRequest.setInterval(5 * 60 * 1000);
+        locationRequest.setFastestInterval(1 * 60 * 1000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         // locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY); // accuracy of approximately 100 meters
     }
-
-    LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-     .addLocationRequest(locationRequest);
+/*
+    LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
 
 
     LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
     // ...
     SettingsClient client = LocationServices.getSettingsClient(this);
     Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
-
-
-*/
-
 /*
+
+
 // Request location updates
 // https://developer.android.com/training/location/request-updates#java
 
