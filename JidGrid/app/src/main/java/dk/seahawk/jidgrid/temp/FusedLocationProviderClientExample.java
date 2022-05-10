@@ -30,6 +30,7 @@ public class FusedLocationProviderClientExample extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
      //   setContentView(R.layout.activity_main);
 
      //   ubic = findViewById(R.id.ubi);
@@ -61,7 +62,8 @@ public class FusedLocationProviderClientExample extends AppCompatActivity {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        @SuppressLint("MissingPermission") Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
+
+        Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
 
         locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
