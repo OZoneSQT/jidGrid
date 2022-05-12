@@ -1,4 +1,4 @@
-package dk.seahawk.jidgrid;
+package dk.seahawk.jidgrid.util;
 
 import android.Manifest;
 import android.app.Activity;
