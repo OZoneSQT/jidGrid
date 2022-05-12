@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">JidGrid</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="locator_fragment_label">Locator Fragment</string>
+    <string name="maps_fragment_label">Maps Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="locator_fragment">Hello locator fragment</string>
+    <string name="hello_maps_fragment">Hello maps fragment. Arg: %1$s</string>
+</resources>
