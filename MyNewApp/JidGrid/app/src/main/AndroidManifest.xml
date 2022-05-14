@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="dk.seahawk.jidgrid">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -27,9 +31,9 @@
             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
 
-            To protect key: type "signingreport" in gradle search promt, use SHA1 key in Google Console to protect key to app packet
+            To protect key: type "signingreport" in gradle search prompt, use SHA1 key in Google Console to protect key to app packet
 
-            To hide api key on GitHub: Settings => Environments => Add Enviorment => creat Secrets
+            To hide api key on GitHub: Settings => Environments => Add Environment => create Secrets
         -->
 
         <!-- Hide API-keys from GitHub https://developers.google.cn/maps/documentation/android-sdk/secrets-gradle-plugin -->
