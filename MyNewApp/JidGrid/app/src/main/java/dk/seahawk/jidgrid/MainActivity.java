@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements Waldo.OnLocationC
         setUpLocationServices();
     }
 
-
     protected void onStart() {
         super.onStart();
         setUpLocationServices();

@@ -10,7 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9493c492-4a97-4b6c-8d6f-81b4a031f471" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MyNewApp/JidGrid/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../MyNewApp/JidGrid/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MyNewApp/JidGrid/app/src/main/java/dk/seahawk/jidgrid/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../MyNewApp/JidGrid/app/src/main/java/dk/seahawk/jidgrid/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MyNewApp/JidGrid/app/src/main/java/dk/seahawk/jidgrid/ui/home/LocatorFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../MyNewApp/JidGrid/app/src/main/java/dk/seahawk/jidgrid/ui/home/LocatorFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MyNewApp/JidGrid/app/src/main/java/dk/seahawk/jidgrid/ui/home/LocatorViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../MyNewApp/JidGrid/app/src/main/java/dk/seahawk/jidgrid/ui/home/LocatorViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MyNewApp/JidGrid/app/src/main/res/layout/fragment_locator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../MyNewApp/JidGrid/app/src/main/res/layout/fragment_locator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MyNewApp/JidGrid/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../MyNewApp/JidGrid/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
