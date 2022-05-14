@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">JidGrid</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="locator_fragment_label">Locator Fragment</string>
+    <string name="maps_fragment_label">Maps Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="locator_fragment">Hello locator fragment</string>
+    <string name="hello_maps_fragment">Hello maps fragment. Arg: %1$s</string>
+    <string name="longitude">longitude</string>
+    <string name="grid_locator">grid locator</string>
+    <string name="altitude">altitude</string>
+    <string name="latitude">latitude</string>
+    <string name="utc_textclock">utc TextClock</string>
+    <string name="local_textclock">local TextClock</string>
+    <string name="gridlocator_content">Grid Locator:</string>
+    <string name="latitudefield_content">Latitude:</string>
+    <string name="longitudefield_content">Longitude:</string>
+    <string name="altitudefield_content">Altitude:</string>
+</resources>

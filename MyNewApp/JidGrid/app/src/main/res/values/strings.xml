@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">JidGrid</string>
+    <string name="title_locator_home">Home</string>
+    <string name="title_maps">Maps</string>
+</resources>
