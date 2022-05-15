@@ -45,7 +45,6 @@ public class Waldo implements LocationListener {
     private LocationRequest mLocationRequest;
     private LocationCallback mLocationCallback;
     private Context context;
-    private Activity activity;
     private OnLocationCompleteListener onLocationCompleteListener;
     private FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -159,6 +158,7 @@ public class Waldo implements LocationListener {
                 break;
         }
     }
+
 
     public interface OnLocationCompleteListener {
 
