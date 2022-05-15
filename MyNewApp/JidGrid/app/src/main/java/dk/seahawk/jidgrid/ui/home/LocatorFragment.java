@@ -1,5 +1,6 @@
 package dk.seahawk.jidgrid.ui.home;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +29,10 @@ public class LocatorFragment extends Fragment {
         final TextView latField = binding.txtLatitude;
         final TextView altField = binding.txtAltitude;
 
-        locatorViewModel.getText().observe(getViewLifecycleOwner(), jidField::setText);
-        locatorViewModel.getText().observe(getViewLifecycleOwner(), lonField::setText);
-        locatorViewModel.getText().observe(getViewLifecycleOwner(), latField::setText);
-        locatorViewModel.getText().observe(getViewLifecycleOwner(), altField::setText);
+        locatorViewModel.getJid().observe(getViewLifecycleOwner(), jidField::setText);
+        locatorViewModel.getLon().observe(getViewLifecycleOwner(), lonField::setText);
+        locatorViewModel.getLat().observe(getViewLifecycleOwner(), latField::setText);
+        locatorViewModel.getAlt().observe(getViewLifecycleOwner(), altField::setText);
 
         return root;
     }
@@ -40,6 +41,10 @@ public class LocatorFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public Activity getActivityFromFragment() {
+        return getActivity();
     }
 
 }

@@ -1,6 +1,7 @@
 package dk.seahawk.jidgrid;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -30,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements Waldo.OnLocationC
     private Location currentLocation;
 
     private final int REQUEST_CODE_ASK_PERMISSIONS = 100;
-
 
     /**
      * Lifecycles
@@ -133,5 +133,6 @@ public class MainActivity extends AppCompatActivity implements Waldo.OnLocationC
 
     @Override
     public void onResolvableApiResponseFailure() {}
+
 
 }
