@@ -2,14 +2,17 @@ package dk.seahawk.jidgrid.ui.locator;
 
 import android.location.Location;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.android.gms.location.LocationListener;
+
 import dk.seahawk.jidgrid.algorithm.GridAlgorithm;
 import dk.seahawk.jidgrid.algorithm.GridAlgorithmInterface;
 
-public class LocatorViewModel extends ViewModel {
+public class LocatorViewModel extends ViewModel implements LocationListener {
 
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
@@ -30,10 +33,10 @@ public class LocatorViewModel extends ViewModel {
         altText = new MutableLiveData<>();
 
         //TODO NULL Pointer Exception, Location is not set
-        jidText.setValue(/* gridAlgorithm.getGridLocation(lastKnownLocation)*/ "jid test");
-        lonText.setValue(/* String.valueOf(lastKnownLocation.getLongitude())*/ "lon test");
-        latText.setValue(/* String.valueOf(lastKnownLocation.getLatitude())*/ "lat test");
-        altText.setValue(/* String.valueOf(lastKnownLocation.getAltitude())*/ "alt test");
+        jidText.setValue("init. grid locator");
+        lonText.setValue("init. longitude");
+        latText.setValue("init. latitude");
+        altText.setValue("init. altitude");
     }
 
     public LiveData<String> getJid() {
@@ -52,4 +55,14 @@ public class LocatorViewModel extends ViewModel {
         return altText;
     }
 
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+        lastKnownLocation = location;
+
+        //TODO NULL Pointer Exception, Location is not set
+        jidText.setValue(gridAlgorithm.getGridLocation(lastKnownLocation));
+        lonText.setValue(String.valueOf(lastKnownLocation.getLongitude()));
+        latText.setValue(String.valueOf(lastKnownLocation.getLatitude()));
+        altText.setValue(String.valueOf(lastKnownLocation.getAltitude()));
+    }
 }

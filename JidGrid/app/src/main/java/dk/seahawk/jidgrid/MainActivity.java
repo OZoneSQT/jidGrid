@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private Location currentLocation;
     private LocationCallback locationCallback;
 
+
+
     /**
      * Lifecycles
      */

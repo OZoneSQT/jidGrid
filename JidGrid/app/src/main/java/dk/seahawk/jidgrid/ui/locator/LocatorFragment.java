@@ -1,6 +1,5 @@
 package dk.seahawk.jidgrid.ui.locator;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
