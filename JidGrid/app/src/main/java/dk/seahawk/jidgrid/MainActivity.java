@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                 for (Location location : locationResult.getLocations()) {
                     // Update UI with location data
                     currentLocation = location;
-                   // currentLocationListener.getLocationUpdate(location);
+                    // currentLocationListener.getLocationUpdate(location);
                     Log.d("TAG", "onLocationResult: latitude " + currentLocation.getLatitude() + " longitude " + currentLocation.getLongitude());
                 }
             } /*;*/

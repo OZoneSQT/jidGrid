@@ -19,6 +19,8 @@ public class LocatorViewModel extends ViewModel implements LocationListener {
     private Location lastKnownLocation;
     private GridAlgorithmInterface gridAlgorithm;
 
+    //TODO Move FusedLocationProviderClient to a separate class to avoid violating MVVM
+    // https://proandroiddev.com/android-tutorial-on-location-update-with-livedata-774f8fcc9f15
     private final MutableLiveData<String> jidText;
     private final MutableLiveData<String> lonText;
     private final MutableLiveData<String> latText;
