@@ -13,17 +13,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import dk.seahawk.jidgrid.databinding.FragmentLocatorBinding;
 
-
+// View
 public class LocatorFragment extends Fragment {
 
     private FragmentLocatorBinding binding;
-
-    private static final String TAG = LocatorFragment.class.getSimpleName();
-
-    // The geographical location where the device is currently located. That is, the last-known
-    // location retrieved by the Fused Location Provider.
-    private Location lastKnownLocation;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LocatorViewModel locatorViewModel = new ViewModelProvider(this).get(LocatorViewModel.class);

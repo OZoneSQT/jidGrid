@@ -11,7 +11,9 @@ import dk.seahawk.jidgrid.algorithm.GridAlgorithmInterface;
 
 public class LocatorViewModel extends ViewModel {
 
-    private Location currentLocation;
+    // The geographical location where the device is currently located. That is, the last-known
+    // location retrieved by the Fused Location Provider.
+    private Location lastKnownLocation;
     private GridAlgorithmInterface gridAlgorithm;
 
     private final MutableLiveData<String> jidText;
@@ -28,10 +30,10 @@ public class LocatorViewModel extends ViewModel {
         altText = new MutableLiveData<>();
 
         //TODO NULL Pointer Exception, Location is not set
-        jidText.setValue(/* gridAlgorithm.getGridLocation(currentLocation)*/ "jid test");
-        lonText.setValue(/* String.valueOf(currentLocation.getLongitude())*/ "lon test");
-        latText.setValue(/* String.valueOf(currentLocation.getLatitude())*/ "lat test");
-        altText.setValue(/* String.valueOf(currentLocation.getAltitude())*/ "alt test");
+        jidText.setValue(/* gridAlgorithm.getGridLocation(lastKnownLocation)*/ "jid test");
+        lonText.setValue(/* String.valueOf(lastKnownLocation.getLongitude())*/ "lon test");
+        latText.setValue(/* String.valueOf(lastKnownLocation.getLatitude())*/ "lat test");
+        altText.setValue(/* String.valueOf(lastKnownLocation.getAltitude())*/ "alt test");
     }
 
     public LiveData<String> getJid() {
@@ -49,7 +51,5 @@ public class LocatorViewModel extends ViewModel {
     public LiveData<String> getAlt() {
         return altText;
     }
-
-
 
 }
