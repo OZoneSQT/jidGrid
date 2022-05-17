@@ -17,7 +17,7 @@ public class LocatorViewModel extends ViewModel implements LocationListener {
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     private Location lastKnownLocation;
-    private GridAlgorithmInterface gridAlgorithm;
+
 
     //TODO Move FusedLocationProviderClient to a separate class to avoid violating MVVM
     // https://proandroiddev.com/android-tutorial-on-location-update-with-livedata-774f8fcc9f15
@@ -27,7 +27,7 @@ public class LocatorViewModel extends ViewModel implements LocationListener {
     private final MutableLiveData<String> altText;
 
     public LocatorViewModel() {
-        gridAlgorithm = new GridAlgorithm();
+
 
         jidText = new MutableLiveData<>();
         lonText = new MutableLiveData<>();

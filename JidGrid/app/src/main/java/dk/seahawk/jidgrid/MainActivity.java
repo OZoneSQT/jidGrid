@@ -137,19 +137,16 @@ public class MainActivity extends AppCompatActivity {
         Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
         task.addOnSuccessListener(this, locationSettingsResponse -> {
             // All location settings are satisfied. The client can initialize
-            // location requests here.
             Log.d("TAG", "onSuccess: settingsCheck");
             getCurrentLocation();
         });
 
         task.addOnFailureListener(this, e -> {
             if (e instanceof ResolvableApiException) {
-                // Location settings are not satisfied, but this can be fixed
-                // by showing the user a dialog.
+                // Location settings are not satisfied, but this can be fixed by showing the user a dialog.
                 Log.d("TAG", "onFailure: settingsCheck");
                 try {
-                    // Show the dialog by calling startResolutionForResult(),
-                    // and check the result in onActivityResult().
+                    // Show the dialog by calling startResolutionForResult(), and check the result in onActivityResult().
                     ResolvableApiException resolvable = (ResolvableApiException) e;
                     resolvable.startResolutionForResult(MainActivity.this, REQUEST_CHECK_SETTINGS);
                 } catch (IntentSender.SendIntentException sendEx) {} // Ignore the error.
