@@ -15,7 +15,7 @@ https://youtu.be/44AfTsKFNrE
 # Abstract:
   The App make it easy to identify the location for logging Ham radio connections. And also, getting notification if the location is a IOTA or SOTA location.
 
-  The app needs access to: files, and device location
+  The app needs access to: device location
 
 
 #Requirements
