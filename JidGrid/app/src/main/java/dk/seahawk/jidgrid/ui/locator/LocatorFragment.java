@@ -62,7 +62,7 @@ public class LocatorFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LocatorViewModel locatorViewModel = new ViewModelProvider(this).get(LocatorViewModel.class);
-        startLocationService();
+     //   startLocationService();
 
         // Initialize view
         binding = FragmentLocatorBinding.inflate(inflater, container, false);
@@ -76,8 +76,8 @@ public class LocatorFragment extends Fragment {
         altField = root.findViewById(R.id.txt_altitude);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
-        createLocationRequest();
-        settingsCheck();
+   //     createLocationRequest();
+    //    settingsCheck();
 
         return root;
     }
@@ -118,7 +118,7 @@ public class LocatorFragment extends Fragment {
         locationRequest.setFastestInterval(fastInterval);
         locationRequest.setPriority(priority);
     }
-
+/*
     // Check for location settings
     public void settingsCheck() {
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
@@ -143,7 +143,8 @@ public class LocatorFragment extends Fragment {
             }
         });
     }
-
+*/
+    /*
     @SuppressLint("MissingPermission")
     public void getCurrentLocation(){
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -173,6 +174,8 @@ public class LocatorFragment extends Fragment {
                 });
     }
 
+     */
+/*
     private void buildLocationCallback() {
         locationCallback = new LocationCallback() {
             @Override
@@ -189,16 +192,19 @@ public class LocatorFragment extends Fragment {
                     // currentLocationListener.getLocationUpdate(location);
                     Log.d(TAG, "onLocationResult: latitude " + currentLocation.getLatitude() + " longitude " + currentLocation.getLongitude());
                 }
-            } /*;*/
+            }
         };
     }
-
+    */
+/*
     //called after user responds to location permission popup
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode == REQUEST_GRANT_PERMISSION) getCurrentLocation();
     }
+
+ */
 /*
     //called after user responds to location settings popup
     @Override
@@ -209,6 +215,7 @@ public class LocatorFragment extends Fragment {
         if(requestCode == REQUEST_CHECK_SETTINGS && resultCode == RESULT_CANCELED) Toast.makeText(requireContext(), getString(R.string.req_location_settings), Toast.LENGTH_SHORT).show();
     }
 */
+    /*
     @SuppressLint("MissingPermission")
     public void startLocationService() {
         Log.i(TAG, "Start Location service");
@@ -219,7 +226,8 @@ public class LocatorFragment extends Fragment {
         if(locationCallback == null) buildLocationCallback();
         if(currentLocation == null) fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
     }
-
+    */
+/*
     public void stopLocationService() {
         Log.i(TAG, "Stop Location service");
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
