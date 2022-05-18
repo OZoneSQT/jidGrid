@@ -10,4 +10,5 @@
     <string name="grid_locator">jid locator</string>
     <string name="localTextClock_labeltxt">local time</string>
     <string name="utcTextClock_labeltext">utc time</string>
+    <string name="req_location_settings">Please enable Location settings...!!!</string>
 </resources>

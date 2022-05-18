@@ -1,6 +1,7 @@
 package dk.seahawk.jidgrid;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -36,6 +37,7 @@ import dk.seahawk.jidgrid.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     // Location
     private static final int REQUEST_CHECK_SETTINGS = 1;
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private int interval = 30000;
     private int fastInterval = 5000;
     private int priority = LocationRequest.QUALITY_HIGH_ACCURACY;
-    private FusedLocationProviderClient fusedLocationClient;
+    private FusedLocationProviderClient fusedLocationProviderClient;
     private com.google.android.gms.location.LocationRequest locationRequest;
     private Location currentLocation;
     private LocationCallback locationCallback;
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Init location service
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         createLocationRequest();
         settingsCheck();
 
@@ -137,14 +139,14 @@ public class MainActivity extends AppCompatActivity {
         Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
         task.addOnSuccessListener(this, locationSettingsResponse -> {
             // All location settings are satisfied. The client can initialize
-            Log.d("TAG", "onSuccess: settingsCheck");
+            Log.d(TAG, "onSuccess: settingsCheck");
             getCurrentLocation();
         });
 
         task.addOnFailureListener(this, e -> {
             if (e instanceof ResolvableApiException) {
                 // Location settings are not satisfied, but this can be fixed by showing the user a dialog.
-                Log.d("TAG", "onFailure: settingsCheck");
+                Log.d(TAG, "onFailure: settingsCheck");
                 try {
                     // Show the dialog by calling startResolutionForResult(), and check the result in onActivityResult().
                     ResolvableApiException resolvable = (ResolvableApiException) e;
@@ -154,22 +156,23 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("MissingPermission")
     public void getCurrentLocation(){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
             return;
         }
-        fusedLocationClient.getLastLocation()
+        fusedLocationProviderClient.getLastLocation()
                 .addOnSuccessListener(this, location -> {
-                    Log.d("TAG", "onSuccess: getLastLocation");
+                    Log.d(TAG, "onSuccess: getLastLocation");
                     // Got last known location. In some rare situations this can be null.
                     if (location != null) {
                         currentLocation = location;
                        // currentLocationListener.getLocationUpdate(location);
-                        Log.d("TAG", "onSuccess: latitude " + location.getLatitude() + " longitude " + location.getLongitude());
+                        Log.d(TAG, "onSuccess: latitude " + location.getLatitude() + " longitude " + location.getLongitude());
                     } else {
-                        Log.d("TAG", "location is null");
+                        Log.d(TAG, "location is null");
                         buildLocationCallback();
                     }
                 });
@@ -184,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                     // Update UI with location data
                     currentLocation = location;
                     // currentLocationListener.getLocationUpdate(location);
-                    Log.d("TAG", "onLocationResult: latitude " + currentLocation.getLatitude() + " longitude " + currentLocation.getLongitude());
+                    Log.d(TAG, "onLocationResult: latitude " + currentLocation.getLatitude() + " longitude " + currentLocation.getLongitude());
                 }
             } /*;*/
         };
@@ -207,23 +210,24 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enable Location settings...!!!", Toast.LENGTH_SHORT).show();
     }
 
+    @SuppressLint("MissingPermission")
     public void startLocationService() {
-        Log.i("TAG", "Start Location service");
+        Log.i(TAG, "Start Location service");
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
             ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_GRANT_PERMISSION);
             return;
         }
         if(locationCallback == null) buildLocationCallback();
-        if(currentLocation == null) fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+        if(currentLocation == null) fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
     }
 
     public void stopLocationService() {
-        Log.i("TAG", "Stop Location service");
+        Log.i(TAG, "Stop Location service");
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
             ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_GRANT_PERMISSION);
             return;
         }
-        if(locationCallback!=null) fusedLocationClient.removeLocationUpdates(locationCallback);
+        if(locationCallback!=null) fusedLocationProviderClient.removeLocationUpdates(locationCallback);
     }
 
 }
