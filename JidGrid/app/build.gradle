@@ -46,7 +46,22 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:19.0.1'
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
 
-    testImplementation 'junit:junit:4.13.2'
+    
+    // source: https://medium.com/@david.m.precopia/how-to-add-junit-5-to-your-android-project-c9851aa63a62
+    // Remove this, providing that you are exclusively refactoring to JUnit 5
+    // testImplementation 'junit:junit:4.13.2'
+
+    // Required, the core dependencies
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.1"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.8.1"
+
+    // Optional, if you need Parameterized Tests
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.8.1"
+
+    // Optional, if you plan on keeping your existing JUnit 4 based tests.
+    // It provides a TestEngine for running v3 and v4 based tests on the v5 platform.
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.8.1"
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
