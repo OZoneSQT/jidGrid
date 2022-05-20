@@ -1,0 +1,24 @@
+https://www.tabnine.com/code/java/methods/com.google.android.gms.location.LocationServices/getFusedLocationProviderClient
+https://guides.codepath.com/android/Retrieving-Location-with-LocationServices-API
+https://stackoverflow.com/questions/46481789/android-locationservices-fusedlocationapi-deprecated
+https://stackoverflow.com/questions/64414284/how-do-i-get-current-location-using-fusedlocationproviderclient
+https://stackoverflow.com/questions/44651889/cannot-resolve-symbol-fusedlocationproviderclient-google-play-services-version
+https://developer.android.com/reference/android/location/LocationListener
+https://duckduckgo.com/?q=locationlistener+android+example&t=newext&atb=v309-1&ia=web
+
+
+https://www.geeksforgeeks.org/how-to-get-current-location-inside-android-fragment/
+https://stackoverflow.com/questions/39320952/how-to-get-location-in-fragment
+https://stackoverflow.com/questions/16295101/how-to-change-fragments-textviews-text-from-activity
+
+https://stackoverflow.com/questions/15322237/android-how-do-i-update-my-textview-in-a-fragment
+https://www.geeksforgeeks.org/using-fused-location-api-to-fetch-current-location-in-android/
+https://duckduckgo.com/?q=get+location+updates+using+fragment+textfield+java&t=newext&atb=v309-1&ia=web
+
+https://duckduckgo.com/?q=lat+lon+location+textview+android&t=newext&atb=v309-1&ia=web
+
+
+EDIT TEXT View
+
+
+https://stackoverflow.com/questions/34194232/android-app-showing-lat-long-in-textviews
