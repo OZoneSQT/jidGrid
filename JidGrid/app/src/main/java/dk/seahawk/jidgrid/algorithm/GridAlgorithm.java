@@ -7,6 +7,7 @@ import dk.seahawk.jidgrid.algorithm.gridcalc.MaidenheadLatitude;
 import dk.seahawk.jidgrid.algorithm.gridcalc.MaidenheadLongitude;
 import dk.seahawk.jidgrid.algorithm.gridcalc.Square;
 import dk.seahawk.jidgrid.algorithm.gridcalc.SubSquare;
+import dk.seahawk.mockup.LocationCard;
 
 
 // https://en.wikipedia.org/wiki/Maidenhead_Locator_System
@@ -66,6 +67,43 @@ public class GridAlgorithm implements GridAlgorithmInterface {
 
     public String getAltitude() {
         return String.valueOf(altitude);
+    }
+
+    // Test method for, muck up test of location
+    @Override
+    public String getGridLocationTestMethod(LocationCard muckUpLocation) {
+        this.longitude = muckUpLocation.getLongitudeNum();
+        this.latitude = muckUpLocation.getLatitudeNum();
+        this.altitude = muckUpLocation.getAltitudeNum();
+        parseLocation();
+
+        System.out.print(" ( ( ( longitude + 180 ) % 20 )  & ");
+        System.out.print(" (int) ( longitude + 180 ) / 20 -> ");
+        System.out.println(" Value of longitudeField: " + longitudeField);
+
+        System.out.print(" ( ( latitude + 90 ) % 10 )  & ");
+        System.out.print(" (int) ( latitude + 90 ) / 10  -> ");
+        System.out.println(" Value of latitudeField: " + latitudeField);
+
+        System.out.print(" ( ( longitudeFieldRemainder % 2 )  & ");
+        System.out.print(" ( (int) ( longitudeFieldRemainder / 2 )  -> ");
+        System.out.println(" Value of longitudeSquare: " + longitudeSquare);
+
+        System.out.print(" ( ( latitudeFieldRemainder % 1 )  & ");
+        System.out.print(" ( (int) ( latitudeFieldRemainder / 1 )  -> ");
+        System.out.println(" Value of latitudeSquare: " + latitudeSquare);
+
+        System.out.print(" (int) ( longitudeSquareRemainder / 0.083333  -> ");
+        System.out.println(" Value of longitudeSubSquare: " + longitudeSubSquare);
+
+        System.out.print(" (int) ( latitudeSquareRemainder / 0.0416  -> ");
+        System.out.println(" Value of latitudeSubSquare: " + latitudeSubSquare);
+
+        String result = getGridSquares();
+        System.out.print(" Longitude: " + longitude + ", Latitude: " + latitude + ",");
+        System.out.println(" Location grid id = " + result);
+
+        return result;
     }
 
 }

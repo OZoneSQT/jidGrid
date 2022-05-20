@@ -1,13 +1,17 @@
 <resources>
     <string name="app_name">JidGrid</string>
-    <string name="title_locator_home">Home</string>
-    <string name="title_maps">Maps</string>
-    <string name="local_textclock">Local time</string>
+    <string name="title_locator_home">JidGrid</string>
+    <string name="title_maps">Map</string>
+    <string name="local_textclock">Local clock</string>
     <string name="utc_textclock">utc clock</string>
     <string name="altitude">altitude</string>
     <string name="latitude">latitude</string>
     <string name="longitude">longitude</string>
-    <string name="grid_locator">jid locator</string>
+    <string name="grid_locator">locator</string>
     <string name="localTextClock_labeltxt">local time</string>
     <string name="utcTextClock_labeltext">utc time</string>
+    <string name="req_location_settings">Please enable Location settings...!!!</string>
+    <string name="about">by OZ1SQT</string>
+    <string name="my_url">www.Seahawk.dk</string>
 </resources>
+<!-- https://developer.android.com/studio/write/translations-editor -->

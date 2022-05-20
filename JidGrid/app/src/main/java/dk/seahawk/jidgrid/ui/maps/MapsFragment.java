@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.LatLng;
 import dk.seahawk.jidgrid.R;
 
 // https://stackoverflow.com/questions/18532581/how-to-retrieve-current-device-location-show-it-on-map-fragment-in-a-fragment
+// https://medium.com/@bariskarapinar/location-updates-implementing-google-maps-fragment-android-app-d83a0b2d9914
 public class MapsFragment extends Fragment implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
 
     private GoogleMap googleMap;
@@ -39,6 +40,7 @@ public class MapsFragment extends Fragment implements ConnectionCallbacks, OnCon
     // https://medium.com/@bariskarapinar/location-updates-implementing-google-maps-fragment-android-app-d83a0b2d9914
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationRequest locationRequest;
+    private int priority = android.location.LocationRequest.QUALITY_HIGH_ACCURACY;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -64,15 +66,14 @@ public class MapsFragment extends Fragment implements ConnectionCallbacks, OnCon
 
             //TODO Add map stuff
             try {
-                /*
-                MAP_TYPE_HYBRID 	Satellite maps with a transparent layer of major streets.
-                MAP_TYPE_NONE 	    No base map tiles.
-                MAP_TYPE_NORMAL 	Basic maps.
-                MAP_TYPE_SATELLITE 	Satellite maps with no labels.
-                MAP_TYPE_TERRAIN 	Terrain maps.
-             */
-                googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-
+                 /*
+                    MAP_TYPE_HYBRID 	Satellite maps with a transparent layer of major streets.
+                    MAP_TYPE_NONE 	    No base map tiles.
+                    MAP_TYPE_NORMAL 	Basic maps.
+                    MAP_TYPE_SATELLITE 	Satellite maps with no labels.
+                    MAP_TYPE_TERRAIN 	Terrain maps.
+                  */
+                googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                 googleMap.setMyLocationEnabled(true);
                 googleMap.getUiSettings().setMyLocationButtonEnabled( true );
                 googleMap.getUiSettings().setZoomControlsEnabled( false );
@@ -92,7 +93,7 @@ public class MapsFragment extends Fragment implements ConnectionCallbacks, OnCon
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setPriority(priority);
     }
 
     @Nullable

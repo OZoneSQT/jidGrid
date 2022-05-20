@@ -2,6 +2,8 @@ package dk.seahawk.jidgrid.algorithm;
 
 import android.location.Location;
 
+import dk.seahawk.mockup.LocationCard;
+
 public interface GridAlgorithmInterface {
 
     /**
@@ -25,4 +27,10 @@ public interface GridAlgorithmInterface {
      */
     String getAltitude();
 
+    /**
+     * Test method
+     * @param muckUpLocation
+     * @return
+     */
+    String getGridLocationTestMethod(LocationCard muckUpLocation);
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">JidGrid</string>
+    <string name="title_maps">Carte</string>
+    <string name="local_textclock">local</string>
+    <string name="utcTextClock_labeltext">UTC time</string>
+    <string name="altitude">altitude</string>
+    <string name="latitude">latitude</string>
+    <string name="longitude">longitude</string>
+    <string name="localTextClock_labeltxt">heure locale</string>
+    <string name="utc_textclock">utc</string>
+    <string name="grid_locator">localisateur</string>
+    <string name="req_location_settings">Veuillez activer les paramètres de localisation...!!!</string>
+    <string name="about" translatable="false">par OZ1SQT</string>
+    <string name="my_url" translatable="false">www.Seahawk.dk</string>
+    <string name="title_locator_home">Localisateur de grille</string>
+</resources>
