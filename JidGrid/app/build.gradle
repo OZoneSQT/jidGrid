@@ -45,8 +45,10 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-location:19.0.1'
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
-    
+
     // source: https://medium.com/@david.m.precopia/how-to-add-junit-5-to-your-android-project-c9851aa63a62
     // Remove this, providing that you are exclusively refactoring to JUnit 5
     // testImplementation 'junit:junit:4.13.2'

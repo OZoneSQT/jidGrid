@@ -18,4 +18,5 @@
     <string name="my_lat">лат:</string>
     <string name="my_alt">альтернатива:</string>
     <string name="my_alt_unit">м</string>
+    <string name="title_history">History</string>
 </resources>

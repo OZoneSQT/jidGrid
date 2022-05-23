@@ -17,4 +17,10 @@
         android:label="@string/title_maps"
         tools:layout="@layout/fragment_maps" />
 
+    <fragment
+        android:id="@+id/navigation_history"
+        android:name="dk.seahawk.jidgrid.ui.history.HistoryFragment"
+        android:label="@string/title_history"
+        tools:layout="@layout/fragment_history" />
+
 </navigation>

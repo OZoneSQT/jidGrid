@@ -17,5 +17,6 @@
     <string name="my_lat">lat:</string>
     <string name="my_alt">alt:</string>
     <string name="my_alt_unit">m</string>
+    <string name="title_history">History</string>
 </resources>
 <!-- https://developer.android.com/studio/write/translations-editor -->

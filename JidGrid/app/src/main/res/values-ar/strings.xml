@@ -18,4 +18,5 @@
     <string name="my_lat">خط العرض:</string>
     <string name="my_alt">بديل:</string>
     <string name="my_alt_unit">م</string>
+    <string name="title_history">History</string>
 </resources>
