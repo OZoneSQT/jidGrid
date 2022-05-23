@@ -14,4 +14,8 @@
     <string name="altitude">ارتفاع</string>
     <string name="my_url" translatable="false">www.Seahawk.dk</string>
     <string name="utc_textclock">utc</string>
+    <string name="my_lon">لون:</string>
+    <string name="my_lat">خط العرض:</string>
+    <string name="my_alt">بديل:</string>
+    <string name="my_alt_unit">م</string>
 </resources>

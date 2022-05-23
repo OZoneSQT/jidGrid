@@ -13,5 +13,9 @@
     <string name="req_location_settings">Please enable Location settings...!!!</string>
     <string name="about">by OZ1SQT</string>
     <string name="my_url">www.Seahawk.dk</string>
+    <string name="my_lon">lon:</string>
+    <string name="my_lat">lat:</string>
+    <string name="my_alt">alt:</string>
+    <string name="my_alt_unit">m</string>
 </resources>
 <!-- https://developer.android.com/studio/write/translations-editor -->

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="my_lon">lon:</string>
+    <string name="my_lat">lat:</string>
+    <string name="my_alt">alt:</string>
+    <string name="my_alt_unit">m</string>
+</resources>
