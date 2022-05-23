@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationListener;
+
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
@@ -54,6 +55,7 @@ public class LocatorFragment extends Fragment implements LocationListener {
      *                          PRIORITY_LOW_POWER (104) - Used to request "city" level accuracy.
      *                          PRIORITY_NO_POWER (105) - Used to request the best accuracy possible with zero additional power consumption.
      */
+
     private int interval = 10000;
     private int fastInterval = 5000;
     private int priority = LocationRequest.QUALITY_HIGH_ACCURACY;
@@ -176,7 +178,7 @@ public class LocatorFragment extends Fragment implements LocationListener {
             Log.d(TAG, "location permissions denied");
         }
     }
-
+  
     private void updatedLocation(@NonNull Location location) {
         jidField.setText(gridAlgorithm.getGridLocation(location));
         lonField.setText(String.valueOf(location.getLongitude()));
