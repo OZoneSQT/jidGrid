@@ -14,4 +14,8 @@
     <string name="my_url" translatable="false">www.Seahawk.dk</string>
     <string name="altitude">højde</string>
     <string name="req_location_settings">Aktiver venligst placeringsindstillinger...!!!</string>
+    <string name="my_lon">lon:</string>
+    <string name="my_lat">lat:</string>
+    <string name="my_alt">alt:</string>
+    <string name="my_alt_unit">m</string>
 </resources>

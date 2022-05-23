@@ -24,6 +24,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationListener;
+
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
@@ -36,10 +38,10 @@ import dk.seahawk.jidgrid.databinding.FragmentLocatorBinding;
 // https://www.geeksforgeeks.org/how-to-get-current-location-inside-android-fragment/
 
 // View
-public class LocatorFragment extends Fragment {
+public class LocatorFragment extends Fragment implements LocationListener {
 
     private FragmentLocatorBinding binding;
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = LocatorFragment.class.getSimpleName();
 
     /**
      * LocationRequest
@@ -53,7 +55,8 @@ public class LocatorFragment extends Fragment {
      *                          PRIORITY_LOW_POWER (104) - Used to request "city" level accuracy.
      *                          PRIORITY_NO_POWER (105) - Used to request the best accuracy possible with zero additional power consumption.
      */
-    private int interval = 30000;
+
+    private int interval = 10000;
     private int fastInterval = 5000;
     private int priority = LocationRequest.QUALITY_HIGH_ACCURACY;
 
@@ -175,14 +178,19 @@ public class LocatorFragment extends Fragment {
             Log.d(TAG, "location permissions denied");
         }
     }
-
-    //TODO format output (altitude decimals) and add field descriptions
+  
     private void updatedLocation(@NonNull Location location) {
         jidField.setText(gridAlgorithm.getGridLocation(location));
         lonField.setText(String.valueOf(location.getLongitude()));
         latField.setText(String.valueOf(location.getLatitude()));
         altField.setText(String.format("%.2f", location.getAltitude()));
         Log.d(TAG, "location updated in layout");
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+        updatedLocation(location);
+        Log.d(TAG, "location changed");
     }
 
 }
