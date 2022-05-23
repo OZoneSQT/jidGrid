@@ -8,12 +8,18 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.List;
+
 import dk.seahawk.jidgrid.databinding.ActivityMainBinding;
+import dk.seahawk.jidgrid.ui.history.LocationHistoryModel;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private ILocationHistory iHistory;
+    private List<LocationHistoryModel.PlaceholderItem> historyItems;
 
     /**
      * Lifecycles
@@ -21,6 +27,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        iHistory = new ILocationHistory() {
+            @Override
+            public void addHistoryList(List<LocationHistoryModel.PlaceholderItem> items) {
+                historyItems = items;
+            }
+
+            @Override
+            public List<LocationHistoryModel.PlaceholderItem> getHistoryList() {
+                return historyItems;
+            }
+        };
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -33,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+    }
+
+    public interface ILocationHistory {
+        void addHistoryList(List<LocationHistoryModel.PlaceholderItem> items);
+        List<LocationHistoryModel.PlaceholderItem> getHistoryList();
     }
 
 }

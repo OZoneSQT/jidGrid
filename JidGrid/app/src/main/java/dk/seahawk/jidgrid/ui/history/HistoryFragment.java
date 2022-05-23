@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import dk.seahawk.jidgrid.R;
-import dk.seahawk.jidgrid.placeholder.PlaceholderContent;
 
 /**
  * A fragment representing a history of Items.
@@ -25,10 +24,6 @@ public class HistoryFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public HistoryFragment() {
     }
 
@@ -65,7 +60,7 @@ public class HistoryFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyHistoryRecyclerViewAdapter(PlaceholderContent.ITEMS));
+            recyclerView.setAdapter(new HistoryRecyclerViewAdapter(LocationHistoryModel.items));
         }
         return view;
     }
