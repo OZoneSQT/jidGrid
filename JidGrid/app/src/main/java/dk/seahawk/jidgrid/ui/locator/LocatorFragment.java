@@ -1,13 +1,18 @@
 package dk.seahawk.jidgrid.ui.locator;
 
+import static java.time.ZoneOffset.UTC;
+import static java.util.SimpleTimeZone.*;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.icu.text.SimpleDateFormat;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationRequest;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
@@ -19,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -29,16 +35,28 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.SimpleTimeZone;
+import java.util.TimeZone;
+
 import dk.seahawk.jidgrid.MainActivity;
 import dk.seahawk.jidgrid.R;
 import dk.seahawk.jidgrid.algorithm.GridAlgorithm;
 import dk.seahawk.jidgrid.algorithm.GridAlgorithmInterface;
 import dk.seahawk.jidgrid.databinding.FragmentLocatorBinding;
+import dk.seahawk.jidgrid.ui.history.LocationHistoryModel;
 
 // https://www.geeksforgeeks.org/how-to-get-current-location-inside-android-fragment/
 
 // View
-public class LocatorFragment extends Fragment implements LocationListener {
+public class LocatorFragment extends Fragment implements LocationListener, LocationHistoryModel.ILocationHistoryModel {
 
     private FragmentLocatorBinding binding;
     private static final String TAG = LocatorFragment.class.getSimpleName();
@@ -193,4 +211,21 @@ public class LocatorFragment extends Fragment implements LocationListener {
         Log.d(TAG, "location changed");
     }
 
+    @SuppressLint({"NewApi", "LocalSuppress"})
+    public void onClickSaveLocationFAB(View view) {
+        TimeZone tz = TimeZone.getTimeZone("GMT+05:30");
+        Calendar c = Calendar.getInstance(tz);
+        String time = String.format("%02d" , c.get(Calendar.HOUR_OF_DAY))+":"+
+                String.format("%02d" , c.get(Calendar.MINUTE))+":" +
+.                   String.format("%02d" , c.get(Calendar.SECOND))+":" +
+    .           String.format("%03d" , c.get(Calendar.MILLISECOND));
+
+        LocationHistoryModel.PlaceholderItem item = new LocationHistoryModel.PlaceholderItem()
+        addItemToList();
+    }
+
+    @Override
+    public void addItemToList(LocationHistoryModel.PlaceholderItem item) {
+
+    }
 }

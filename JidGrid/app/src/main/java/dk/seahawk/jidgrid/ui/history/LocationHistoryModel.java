@@ -70,4 +70,8 @@ public class LocationHistoryModel implements MainActivity.ILocationHistory {
 
     }
 
+    public interface ILocationHistoryModel{
+        void addItemToList(PlaceholderItem item);
+    }
+
 }
