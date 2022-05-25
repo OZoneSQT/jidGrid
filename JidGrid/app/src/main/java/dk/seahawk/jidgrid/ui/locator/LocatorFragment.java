@@ -34,6 +34,8 @@ import com.google.android.gms.location.LocationListener;
 
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.time.Instant;
 import java.time.OffsetDateTime;
@@ -48,6 +50,7 @@ import java.util.TimeZone;
 
 import dk.seahawk.jidgrid.MainActivity;
 import dk.seahawk.jidgrid.R;
+import dk.seahawk.jidgrid.algorithm.CoordinateConverter;
 import dk.seahawk.jidgrid.algorithm.GridAlgorithm;
 import dk.seahawk.jidgrid.algorithm.GridAlgorithmInterface;
 import dk.seahawk.jidgrid.databinding.FragmentLocatorBinding;
@@ -59,6 +62,7 @@ import dk.seahawk.jidgrid.ui.history.LocationHistoryModel;
 public class LocatorFragment extends Fragment implements LocationListener, LocationHistoryModel.ILocationHistoryModel {
 
     private FragmentLocatorBinding binding;
+    private CoordinateConverter coordinateConverter = new CoordinateConverter();
     private static final String TAG = LocatorFragment.class.getSimpleName();
 
     /**
@@ -79,7 +83,7 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
     private int priority = LocationRequest.QUALITY_HIGH_ACCURACY;
 
     private GridAlgorithmInterface gridAlgorithm;
-    private TextView jidField, lonField, latField, altField;
+    private TextView jidField, lonField, latField, altField, nsLonField, ewLatField;
 
     /**
      * Solved issue:
@@ -103,8 +107,13 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
         lonField = root.findViewById(R.id.txt_longitude);
         latField = root.findViewById(R.id.txt_latitude);
         altField = root.findViewById(R.id.txt_altitude);
+        nsLonField = root.findViewById(R.id.txt_lon_dms_ns);
+        ewLatField = root.findViewById(R.id.txt_lat_dms_ew);
 
         checkCondition();
+
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+        fab.setOnClickListener(v -> Toast.makeText(requireContext(), "FAB button pressed", Toast.LENGTH_SHORT).show());
 
         return root;
     }
@@ -199,9 +208,12 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
   
     private void updatedLocation(@NonNull Location location) {
         jidField.setText(gridAlgorithm.getGridLocation(location));
-        lonField.setText(String.valueOf(location.getLongitude()));
-        latField.setText(String.valueOf(location.getLatitude()));
-        altField.setText(String.format("%.2f", location.getAltitude()));
+        lonField.setText(coordinateConverter.fiveDigitsDoubleToString(location.getLongitude()));
+        latField.setText(coordinateConverter.fiveDigitsDoubleToString(location.getLatitude()));
+        altField.setText(coordinateConverter.twoDigitsDoubleToString(location.getAltitude()));
+        nsLonField.setText(coordinateConverter.getLon(location.getLongitude()));
+        ewLatField.setText(coordinateConverter.getLat(location.getLatitude()));
+
         Log.d(TAG, "location updated in layout");
     }
 
@@ -211,17 +223,12 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
         Log.d(TAG, "location changed");
     }
 
-    @SuppressLint({"NewApi", "LocalSuppress"})
-    public void onClickSaveLocationFAB(View view) {
-        TimeZone tz = TimeZone.getTimeZone("GMT+05:30");
-        Calendar c = Calendar.getInstance(tz);
-        String time = String.format("%02d" , c.get(Calendar.HOUR_OF_DAY))+":"+
-                String.format("%02d" , c.get(Calendar.MINUTE))+":" +
-.                   String.format("%02d" , c.get(Calendar.SECOND))+":" +
-    .           String.format("%03d" , c.get(Calendar.MILLISECOND));
+    private String setLocalTime(Date time){
+        return "null";
+    }
 
-        LocationHistoryModel.PlaceholderItem item = new LocationHistoryModel.PlaceholderItem()
-        addItemToList();
+    private String setUTCTime(Date time) {
+        return "null";
     }
 
     @Override

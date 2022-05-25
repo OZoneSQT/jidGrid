@@ -19,4 +19,6 @@
     <string name="my_alt">альтернатива:</string>
     <string name="my_alt_unit">м</string>
     <string name="title_history">History</string>
+    <string name="my_dd">DD</string>
+    <string name="my_dms">DMS</string>
 </resources>
