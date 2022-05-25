@@ -68,12 +68,12 @@ public class MapsFragment extends Fragment implements ConnectionCallbacks, OnCon
             try {
                  /*
                     MAP_TYPE_HYBRID 	Satellite maps with a transparent layer of major streets.
-                    MAP_TYPE_NONE 	    No base map tiles.
-                    MAP_TYPE_NORMAL 	Basic maps.
+                    MAP_PTYPE_NONE 	    No base map tiles.
+                    MAP_TYE_NORMAL 	Basic maps.
                     MAP_TYPE_SATELLITE 	Satellite maps with no labels.
                     MAP_TYPE_TERRAIN 	Terrain maps.
                   */
-                googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 googleMap.setMyLocationEnabled(true);
                 googleMap.getUiSettings().setMyLocationButtonEnabled( true );
                 googleMap.getUiSettings().setZoomControlsEnabled( false );

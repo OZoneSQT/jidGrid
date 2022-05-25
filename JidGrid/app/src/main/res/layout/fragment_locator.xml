@@ -15,13 +15,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/my_dd"
+        android:textColor="@color/teal_700"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.139" />
+        app:layout_constraintVertical_bias="0.123" />
 
     <TextView
         android:id="@+id/txt_dms"
@@ -29,13 +30,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/my_dms"
+        android:textColor="@color/teal_700"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.359" />
+        app:layout_constraintVertical_bias="0.407" />
 
     <TextView
         android:id="@+id/txt_lat_dms_ew"
@@ -43,13 +45,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/latitude"
-        android:textSize="32sp"
+        android:textSize="45sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.366" />
+        app:layout_constraintVertical_bias="0.43" />
 
     <TextView
         android:id="@+id/txt_lon_dms_ns"
@@ -57,13 +58,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/longitude"
-        android:textSize="32sp"
+        android:textSize="45sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.434" />
+        app:layout_constraintVertical_bias="0.533" />
 
     <TextView
         android:id="@+id/txt_jid"
@@ -71,7 +71,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/grid_locator"
-        android:textSize="52sp"
+        android:textColor="@color/teal_200"
+        android:textSize="60sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -84,15 +85,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_marginTop="36dp"
         android:text="@string/longitude"
-        android:textSize="32sp"
+        android:textSize="45sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_jid"
-        app:layout_constraintVertical_bias="0.091" />
+        app:layout_constraintVertical_bias="0.099" />
 
     <TextView
         android:id="@+id/txt_latitude"
@@ -100,13 +99,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/latitude"
-        android:textSize="32sp"
+        android:textSize="45sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.132" />
+        app:layout_constraintVertical_bias="0.119" />
 
     <TextView
         android:id="@+id/txt_altitude"
@@ -114,13 +112,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/altitude"
-        android:textSize="32sp"
+        android:textSize="45sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.13"
-        app:layout_constraintStart_toEndOf="@+id/alt_label"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.27" />
+        app:layout_constraintVertical_bias="0.32" />
 
     <TextView
         android:id="@+id/alt_unit_label"
@@ -128,13 +125,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/my_alt_unit"
+        android:textColor="@color/teal_200"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.706"
+        app:layout_constraintHorizontal_bias="0.835"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.282" />
+        app:layout_constraintVertical_bias="0.355" />
 
     <TextView
         android:id="@+id/alt_label"
@@ -142,13 +140,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/my_alt"
+        android:textColor="@color/teal_200"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.258"
+        app:layout_constraintHorizontal_bias="0.113"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.277" />
+        app:layout_constraintVertical_bias="0.35" />
 
     <TextClock
         android:id="@+id/localTextClock"
@@ -156,17 +155,30 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginBottom="44dp"
-        android:format12Hour="hh:mm:ss a"
+        android:format24Hour="hh:mm:ss a"
         android:lines="1"
         android:padding="3dp"
         android:text="@string/local_textclock"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/utcTextClock_label"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.665" />
+
+    <TextView
+        android:id="@+id/localTextClock_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/localTextClock_labeltxt"
+        android:textColor="@color/teal_200"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.608" />
 
     <TextView
         android:id="@+id/utcTextClock_label"
@@ -175,32 +187,19 @@
         android:layout_margin="10dp"
         android:layout_marginBottom="52dp"
         android:text="@string/utcTextClock_labeltext"
+        android:textColor="@color/teal_200"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/utcTextClock"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/localTextClock_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/localTextClock_labeltxt"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/localTextClock"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.723" />
 
     <TextClock
         android:id="@+id/utcTextClock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:format12Hour="hh:mm:ss a"
+        android:format24Hour="hh:mm:ss a"
         android:lines="1"
         android:padding="3dp"
         android:text="@string/utc_textclock"
@@ -208,10 +207,9 @@
         android:timeZone="Etc/UCT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.713" />
+        app:layout_constraintVertical_bias="0.772" />
 
     <TextView
         android:id="@+id/text_url"
@@ -219,13 +217,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/my_url"
+        android:textColor="@color/teal_700"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.063"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.825" />
+        app:layout_constraintVertical_bias="0.852" />
 
     <TextView
         android:id="@+id/text_about"
@@ -233,13 +232,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/about"
+        android:textColor="@color/teal_700"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.876" />
+        app:layout_constraintVertical_bias="0.892" />
 
     <TextView
         android:id="@+id/lon_label"
@@ -247,13 +247,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/my_lon"
+        android:textColor="@color/teal_200"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.24"
+        app:layout_constraintHorizontal_bias="0.115"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.207" />
+        app:layout_constraintVertical_bias="0.256" />
 
     <TextView
         android:id="@+id/lat_label"
@@ -261,13 +262,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/my_lat"
+        android:textColor="@color/teal_200"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.113"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.14" />
+        app:layout_constraintVertical_bias="0.161" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -278,10 +280,10 @@
         android:src="@mipmap/ic_add_location_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.892"
+        app:layout_constraintHorizontal_bias="0.907"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.875" />
+        app:layout_constraintVertical_bias="0.894" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

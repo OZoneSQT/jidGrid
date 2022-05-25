@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">JidGrid</string>
+    <string name="app_name">Локатор сетки</string>
     <string name="title_locator_home">Локатор сетки</string>
     <string name="title_maps">карта</string>
     <string name="local_textclock">Местный</string>
@@ -18,7 +18,7 @@
     <string name="my_lat">лат:</string>
     <string name="my_alt">альтернатива:</string>
     <string name="my_alt_unit">м</string>
-    <string name="title_history">History</string>
-    <string name="my_dd">DD</string>
-    <string name="my_dms">DMS</string>
+    <string name="title_history">История</string>
+    <string name="my_dd">ДД</string>
+    <string name="my_dms">ДМС</string>
 </resources>
