@@ -21,7 +21,7 @@ public class CoordinateConverter {
         int m = (int)dm;
         double s = ((dm - m) * 60);
 
-        return String.valueOf(d) + "\u00B0" + String.valueOf(m) + "\'" + fiveDigitsDoubleToString(s) + "\"";
+        return String.valueOf(d) + "\u00B0" + String.valueOf(m) + "\'" + twoDigitsDoubleToString(s) + "\"";
     }
 
     // Negative latitudes range from 0 to -90° and are found south of the equator.
