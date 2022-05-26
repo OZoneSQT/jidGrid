@@ -8,7 +8,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationRequest;
@@ -42,7 +44,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.SimpleTimeZone;
@@ -233,6 +234,18 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
 
     @Override
     public void addItemToList(LocationHistoryModel.PlaceholderItem item) {
+        // https://stackoverflow.com/questions/9482754/getting-the-current-time-zone-in-android-application
+        // https://stackoverflow.com/questions/16202956/get-current-time-in-a-given-timezone-android
+        // => https://developer.android.com/reference/java/util/TimeZone
+        // https://developer.android.com/reference/android/text/format/DateFormat?hl=en
+        // https://developer.android.com/reference/android/icu/text/RelativeDateTimeFormatter.AbsoluteUnit?hl=en
+        // https://stackoverflow.com/questions/36234639/how-to-get-local-date-and-time-in-android
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            Date currentTime = Calendar.getInstance().getTime();
+            String formattedDate = DateFormat.getDateInstance(DateFormat.FULL).format(currentTime);
+
+        }
 
     }
 }
