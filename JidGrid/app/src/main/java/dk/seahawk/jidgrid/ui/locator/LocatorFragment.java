@@ -1,20 +1,13 @@
 package dk.seahawk.jidgrid.ui.locator;
 
-import static java.time.ZoneOffset.UTC;
-import static java.util.SimpleTimeZone.*;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.Calendar;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationRequest;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
@@ -26,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -37,32 +29,24 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.Locale;
-import java.util.SimpleTimeZone;
+import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
-import dk.seahawk.jidgrid.MainActivity;
 import dk.seahawk.jidgrid.R;
 import dk.seahawk.jidgrid.algorithm.CoordinateConverter;
 import dk.seahawk.jidgrid.algorithm.GridAlgorithm;
 import dk.seahawk.jidgrid.algorithm.GridAlgorithmInterface;
 import dk.seahawk.jidgrid.databinding.FragmentLocatorBinding;
-import dk.seahawk.jidgrid.ui.history.LocationHistoryModel;
+import dk.seahawk.jidgrid.util.LocationHistory;
 
 // https://www.geeksforgeeks.org/how-to-get-current-location-inside-android-fragment/
 
 // View
-public class LocatorFragment extends Fragment implements LocationListener, LocationHistoryModel.ILocationHistoryModel {
+public class LocatorFragment extends Fragment implements LocationListener {
 
     private FragmentLocatorBinding binding;
+    private LocationHistory locationHistory;
     private CoordinateConverter coordinateConverter = new CoordinateConverter();
     private static final String TAG = LocatorFragment.class.getSimpleName();
 
@@ -93,8 +77,10 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
      */
     private FusedLocationProviderClient fusedLocationProviderClient;
     private com.google.android.gms.location.LocationRequest locationRequest;
+    private Location lastKnownLocation;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        locationHistory = locationHistory.getInstances();
 
         // Initialize location client
         //TODO My issue has been that i generated a new fusedLocationProviderClient, not calling it from LocationServices
@@ -114,7 +100,7 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
         checkCondition();
 
         FloatingActionButton fab = root.findViewById(R.id.fab);
-        fab.setOnClickListener(v -> Toast.makeText(requireContext(), "FAB button pressed", Toast.LENGTH_SHORT).show());
+        fab.setOnClickListener(v -> setPlaceholderItem(lastKnownLocation));
 
         return root;
     }
@@ -124,6 +110,7 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
         super.onDestroyView();
         binding = null;
         //TODO should location request be set to null
+        locationRequest = null;
     }
 
     @Override
@@ -144,7 +131,7 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
     @SuppressLint("MissingPermission")
     private void getCurrentLocation() {
         // Initialize Location manager
-        LocationManager locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager)requireActivity().getSystemService(Context.LOCATION_SERVICE);
         // Check condition
         if (locationManager.isProviderEnabled(
                 LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
@@ -208,6 +195,7 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
     }
   
     private void updatedLocation(@NonNull Location location) {
+        this.lastKnownLocation = location;
         jidField.setText(gridAlgorithm.getGridLocation(location));
         lonField.setText(coordinateConverter.fiveDigitsDoubleToString(location.getLongitude()));
         latField.setText(coordinateConverter.fiveDigitsDoubleToString(location.getLatitude()));
@@ -224,28 +212,23 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
         Log.d(TAG, "location changed");
     }
 
-    private String setLocalTime(Date time){
-        return "null";
-    }
+    private void setPlaceholderItem(Location location) {
+        if(location != null) {
+            TimeZone utcTimeZone = TimeZone.getTimeZone("Etc/UCT");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a dd-MM-yyyy");
+            String localTime = dateFormat.format(java.util.Calendar.getInstance().getTime());
+            String utcTime = dateFormat.format(java.util.Calendar.getInstance(utcTimeZone).getTime());
 
-    private String setUTCTime(Date time) {
-        return "null";
-    }
+            String jid = String.valueOf(gridAlgorithm.getGridLocation(location));
+            String lat = String.valueOf(location.getLatitude());
+            String lon = String.valueOf(location.getLongitude());
+            String alt = String.valueOf(location.getAltitude());
 
-    @Override
-    public void addItemToList(LocationHistoryModel.PlaceholderItem item) {
-        // https://stackoverflow.com/questions/9482754/getting-the-current-time-zone-in-android-application
-        // https://stackoverflow.com/questions/16202956/get-current-time-in-a-given-timezone-android
-        // => https://developer.android.com/reference/java/util/TimeZone
-        // https://developer.android.com/reference/android/text/format/DateFormat?hl=en
-        // https://developer.android.com/reference/android/icu/text/RelativeDateTimeFormatter.AbsoluteUnit?hl=en
-        // https://stackoverflow.com/questions/36234639/how-to-get-local-date-and-time-in-android
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            Date currentTime = Calendar.getInstance().getTime();
-            String formattedDate = DateFormat.getDateInstance(DateFormat.FULL).format(currentTime);
-
+            locationHistory.addItemToList((new LocationHistory.PlaceholderItem(jid, localTime, utcTime, lat, lon, alt)));
+            Log.d(TAG, "PlaceholderItem sent to RecyclerView/History");
+        } else {
+            Log.d(TAG, "PlaceholderItem is not sent to RecyclerView/History, Location = null");
         }
-
     }
+
 }

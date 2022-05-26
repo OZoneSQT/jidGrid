@@ -1,16 +1,18 @@
-package dk.seahawk.jidgrid.ui.history;
+package dk.seahawk.jidgrid.util;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import dk.seahawk.jidgrid.MainActivity;
-
-public class LocationHistoryModel implements MainActivity.ILocationHistory {
+public class LocationHistory {
 
     public static List<PlaceholderItem> items = new ArrayList<>();
+    private LocationHistory instance = null;
 
-    public LocationHistoryModel() {
-        items = getHistoryList();
+    private LocationHistory() {}
+
+    public LocationHistory getInstances(){
+        if(instance==null) instance = new LocationHistory();
+        return instance;
     }
 
     /**
@@ -19,15 +21,12 @@ public class LocationHistoryModel implements MainActivity.ILocationHistory {
      */
     public void addItemToList(PlaceholderItem item) {
         items.add(item);
-        addHistoryList(items);
     }
 
-    @Override
     public void addHistoryList(List<PlaceholderItem> placeholderItemList) {
         items = placeholderItemList;
     }
 
-    @Override
     public List<PlaceholderItem> getHistoryList() {
         return items;
     }
@@ -68,10 +67,6 @@ public class LocationHistoryModel implements MainActivity.ILocationHistory {
             return alt;
         }
 
-    }
-
-    public interface ILocationHistoryModel{
-        void addItemToList(PlaceholderItem item);
     }
 
 }
