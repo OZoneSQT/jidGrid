@@ -1,8 +1,6 @@
 package dk.seahawk.jidgrid;
 
-import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
