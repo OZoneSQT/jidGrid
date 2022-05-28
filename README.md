@@ -3,13 +3,15 @@
 note: This app is a part of an exam assignment for a course in android development, at VIA University collage in Horsens, Denmark
 
 # Video presentation 
-https://youtu.be/44AfTsKFNrE
+
 
 
 # Motivation:
   I am radio armature, and haven seen the need for an easy way to identify the locations for logging radio contacts. and documentation in connection to interference complaints.
 
   Since a large potion of users will be expected to be +60 years, there i set requirements for there needs.
+  
+  UI has been updated according to user feedback
 
 
 # Abstract:
@@ -45,3 +47,4 @@ https://youtu.be/44AfTsKFNrE
 - [ ] As a user I wish to be able to add my call, for my log.
 
 - [ ] As a user I wish to be able to if I am /ORP (Low power), /P (Portable), /SWL (Only listening), /JOTA (Jamboree On The Air) for my log.
+
