@@ -26,15 +26,15 @@ public class CoordinateConverter {
 
     // Negative latitudes range from 0 to -90° and are found south of the equator.
     public String getLat(double lat) {
-        String result = "S";
-        if (lat > 0) result = "N";
+        String result = "N";
+        if (lat < 0) result = "S";
         return result + convert(lat);
     }
 
     // Negative longitudes range from 0 to -180° and are found west of the prime meridian.
     public String getLon(double lon) {
-        String result = "W";
-        if (lon > 0) result = "E";
+        String result = "E";
+        if (lon < 0) result = "W";
         return result + convert(lon);
     }
 

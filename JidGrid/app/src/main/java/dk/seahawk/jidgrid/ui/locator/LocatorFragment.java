@@ -1,18 +1,13 @@
 package dk.seahawk.jidgrid.ui.locator;
 
-import static java.time.ZoneOffset.UTC;
-import static java.util.SimpleTimeZone.*;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.icu.text.SimpleDateFormat;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationRequest;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
@@ -24,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -35,33 +29,24 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.SimpleTimeZone;
+import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
-import dk.seahawk.jidgrid.MainActivity;
 import dk.seahawk.jidgrid.R;
 import dk.seahawk.jidgrid.algorithm.CoordinateConverter;
 import dk.seahawk.jidgrid.algorithm.GridAlgorithm;
 import dk.seahawk.jidgrid.algorithm.GridAlgorithmInterface;
 import dk.seahawk.jidgrid.databinding.FragmentLocatorBinding;
-import dk.seahawk.jidgrid.ui.history.LocationHistoryModel;
+import dk.seahawk.jidgrid.util.LocationHistory;
 
 // https://www.geeksforgeeks.org/how-to-get-current-location-inside-android-fragment/
 
 // View
-public class LocatorFragment extends Fragment implements LocationListener, LocationHistoryModel.ILocationHistoryModel {
+public class LocatorFragment extends Fragment implements LocationListener {
 
     private FragmentLocatorBinding binding;
+    private LocationHistory locationHistory;
     private CoordinateConverter coordinateConverter = new CoordinateConverter();
     private static final String TAG = LocatorFragment.class.getSimpleName();
 
@@ -92,6 +77,7 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
      */
     private FusedLocationProviderClient fusedLocationProviderClient;
     private com.google.android.gms.location.LocationRequest locationRequest;
+    private Location lastKnownLocation;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -99,6 +85,7 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
         //TODO My issue has been that i generated a new fusedLocationProviderClient, not calling it from LocationServices
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
         gridAlgorithm = new GridAlgorithm();
+        locationHistory = locationHistory.getInstance();
 
         // Initialize view
         binding = FragmentLocatorBinding.inflate(inflater, container, false);
@@ -113,7 +100,7 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
         checkCondition();
 
         FloatingActionButton fab = root.findViewById(R.id.fab);
-        fab.setOnClickListener(v -> Toast.makeText(requireContext(), "FAB button pressed", Toast.LENGTH_SHORT).show());
+        fab.setOnClickListener(v -> setPlaceholderItem(lastKnownLocation));
 
         return root;
     }
@@ -123,6 +110,7 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
         super.onDestroyView();
         binding = null;
         //TODO should location request be set to null
+        locationRequest = null;
     }
 
     @Override
@@ -143,7 +131,7 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
     @SuppressLint("MissingPermission")
     private void getCurrentLocation() {
         // Initialize Location manager
-        LocationManager locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager)requireActivity().getSystemService(Context.LOCATION_SERVICE);
         // Check condition
         if (locationManager.isProviderEnabled(
                 LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
@@ -207,6 +195,7 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
     }
   
     private void updatedLocation(@NonNull Location location) {
+        this.lastKnownLocation = location;
         jidField.setText(gridAlgorithm.getGridLocation(location));
         lonField.setText(coordinateConverter.fiveDigitsDoubleToString(location.getLongitude()));
         latField.setText(coordinateConverter.fiveDigitsDoubleToString(location.getLatitude()));
@@ -223,16 +212,23 @@ public class LocatorFragment extends Fragment implements LocationListener, Locat
         Log.d(TAG, "location changed");
     }
 
-    private String setLocalTime(Date time){
-        return "null";
+    private void setPlaceholderItem(Location location) {
+        if(location != null) {
+            TimeZone utcTimeZone = TimeZone.getTimeZone("Etc/UCT");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a dd-MM-yyyy");
+            String localTime = dateFormat.format(java.util.Calendar.getInstance().getTime());
+            String utcTime = dateFormat.format(java.util.Calendar.getInstance(utcTimeZone).getTime());
+
+            String jid = String.valueOf(gridAlgorithm.getGridLocation(location));
+            String lat = String.valueOf(location.getLatitude());
+            String lon = String.valueOf(location.getLongitude());
+            String alt = String.valueOf(location.getAltitude());
+
+            locationHistory.addItemToList((new LocationHistory.PlaceholderItem(jid, localTime, utcTime, lat, lon, alt)));
+            Log.d(TAG, "PlaceholderItem sent to RecyclerView/History");
+        } else {
+            Log.d(TAG, "PlaceholderItem is not sent to RecyclerView/History, Location = null");
+        }
     }
 
-    private String setUTCTime(Date time) {
-        return "null";
-    }
-
-    @Override
-    public void addItemToList(LocationHistoryModel.PlaceholderItem item) {
-
-    }
 }
