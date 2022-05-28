@@ -32,13 +32,13 @@ https://youtu.be/44AfTsKFNrE
 
 - [x] As a user I wish to be able to identify my grid location, for my log.
 
-- [x] As a user I wish to be able to save location on my device, for later view.
-
 - [ ] As a user I wish to be able to identify my IOTA location, for my log. (IOTA, Islands On The Air) (geofence)
 
 - [ ] As a user I wish to be able to identify my SOTA location, for my log. (SOTA, Summit On The Air) (geofence)
 
 - [ ] As a user I wish to be able to identify my Flora Fauna location, for my log. (Nature spots) (geofence)
+
+- [ ] As a user I wish to be able to save location on my device, for later view.
 
 - [ ] As a user I wish to be able to save location on external location, for later view.
 

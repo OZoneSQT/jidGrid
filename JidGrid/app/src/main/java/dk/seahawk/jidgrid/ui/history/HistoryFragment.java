@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import dk.seahawk.jidgrid.R;
-import dk.seahawk.jidgrid.util.LocationHistory;
 
 /**
  * A fragment representing a history of Items.
@@ -61,7 +60,7 @@ public class HistoryFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new HistoryRecyclerViewAdapter(LocationHistory.items));
+            recyclerView.setAdapter(new HistoryRecyclerViewAdapter(LocationHistoryModel.items));
         }
         return view;
     }

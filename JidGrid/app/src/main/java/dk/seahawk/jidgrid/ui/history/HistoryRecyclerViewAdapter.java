@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import dk.seahawk.jidgrid.util.LocationHistory.PlaceholderItem;
+import dk.seahawk.jidgrid.ui.history.LocationHistoryModel.PlaceholderItem;
 import dk.seahawk.jidgrid.databinding.FragmentHistoryBinding;
 
 import java.util.List;
