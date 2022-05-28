@@ -80,12 +80,12 @@ public class LocatorFragment extends Fragment implements LocationListener {
     private Location lastKnownLocation;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        locationHistory = locationHistory.getInstances();
 
         // Initialize location client
         //TODO My issue has been that i generated a new fusedLocationProviderClient, not calling it from LocationServices
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
         gridAlgorithm = new GridAlgorithm();
+        locationHistory = locationHistory.getInstance();
 
         // Initialize view
         binding = FragmentLocatorBinding.inflate(inflater, container, false);

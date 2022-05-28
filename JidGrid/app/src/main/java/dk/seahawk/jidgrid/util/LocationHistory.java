@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LocationHistory {
+    // https://stackoverflow.com/questions/18393600/android-singleton-becomes-null
 
     public static List<PlaceholderItem> items = new ArrayList<>();
-    private LocationHistory instance = null;
 
+    // Create instance
+    private static LocationHistory instance = new LocationHistory();
+
+    // Protect class from being instantiated
     private LocationHistory() {}
 
-    public LocationHistory getInstances(){
-        if(instance==null) instance = new LocationHistory();
+    // Return singleton instance of LocationHistory
+    public static LocationHistory getInstance(){
         return instance;
     }
 

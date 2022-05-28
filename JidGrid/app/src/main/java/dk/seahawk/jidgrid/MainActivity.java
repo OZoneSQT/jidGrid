@@ -17,7 +17,7 @@ import dk.seahawk.jidgrid.util.LocationHistory;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private LocationHistory locationHistory;
+    private static LocationHistory locationHistory;
 
     /**
      * Lifecycles
@@ -25,8 +25,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        locationHistory = locationHistory.getInstances();
-
+        locationHistory = locationHistory.getInstance();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
