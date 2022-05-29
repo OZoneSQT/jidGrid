@@ -60,16 +60,11 @@ public class MapsFragment extends Fragment implements ConnectionCallbacks, OnCon
 
             // https://developers.google.com/android/reference/com/google/android/gms/maps/GoogleMap
 
-            // LatLng sydney = new LatLng(-34, 151);
-            // googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            // googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
-            //TODO Add map stuff
             try {
                  /*
                     MAP_TYPE_HYBRID 	Satellite maps with a transparent layer of major streets.
                     MAP_PTYPE_NONE 	    No base map tiles.
-                    MAP_TYE_NORMAL 	Basic maps.
+                    MAP_TYE_NORMAL 	    Basic maps.
                     MAP_TYPE_SATELLITE 	Satellite maps with no labels.
                     MAP_TYPE_TERRAIN 	Terrain maps.
                   */

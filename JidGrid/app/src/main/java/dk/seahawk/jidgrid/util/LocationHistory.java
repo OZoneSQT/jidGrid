@@ -1,16 +1,22 @@
-package dk.seahawk.jidgrid.ui.history;
+package dk.seahawk.jidgrid.util;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import dk.seahawk.jidgrid.MainActivity;
-
-public class LocationHistoryModel implements MainActivity.ILocationHistory {
+public class LocationHistory {
+    // https://stackoverflow.com/questions/18393600/android-singleton-becomes-null
 
     public static List<PlaceholderItem> items = new ArrayList<>();
 
-    public LocationHistoryModel() {
-        items = getHistoryList();
+    // Create instance
+    private static LocationHistory instance = new LocationHistory();
+
+    // Protect class from being instantiated
+    private LocationHistory() {}
+
+    // Return singleton instance of LocationHistory
+    public static LocationHistory getInstance(){
+        return instance;
     }
 
     /**
@@ -19,15 +25,12 @@ public class LocationHistoryModel implements MainActivity.ILocationHistory {
      */
     public void addItemToList(PlaceholderItem item) {
         items.add(item);
-        addHistoryList(items);
     }
 
-    @Override
     public void addHistoryList(List<PlaceholderItem> placeholderItemList) {
         items = placeholderItemList;
     }
 
-    @Override
     public List<PlaceholderItem> getHistoryList() {
         return items;
     }
@@ -68,10 +71,6 @@ public class LocationHistoryModel implements MainActivity.ILocationHistory {
             return alt;
         }
 
-    }
-
-    public interface ILocationHistoryModel{
-        void addItemToList(PlaceholderItem item);
     }
 
 }

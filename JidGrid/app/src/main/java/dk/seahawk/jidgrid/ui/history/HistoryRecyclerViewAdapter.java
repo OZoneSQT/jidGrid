@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import dk.seahawk.jidgrid.ui.history.LocationHistoryModel.PlaceholderItem;
+import dk.seahawk.jidgrid.util.LocationHistory.PlaceholderItem;
 import dk.seahawk.jidgrid.databinding.FragmentHistoryBinding;
 
 import java.util.List;
@@ -48,8 +48,8 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
             super(binding.getRoot());
             itemJidView = binding.itemJidId;
             itemLocView = binding.itemLoc;
-            itemUtcView = binding.itemUtc;  //TODO remember date
-            itemLatView = binding.itemLat;  //TODO remember date
+            itemUtcView = binding.itemUtc;
+            itemLatView = binding.itemLat;
             itemLonView = binding.itemLon;
             itemAltView = binding.itemAlt;
         }
