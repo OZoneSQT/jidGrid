@@ -30,7 +30,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.TimeZone;
 
 import dk.seahawk.jidgrid.R;
@@ -214,12 +214,14 @@ public class LocatorFragment extends Fragment implements LocationListener {
     private void setPlaceholderItem(Location location) {
         if(location != null) {
             TimeZone utcTimeZone = TimeZone.getTimeZone("Etc/UCT");
+            Calendar calendar = java.util.Calendar.getInstance();
             //TODO Format time
             //SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a dd-MM-yyyy");
             //String localTime = dateFormat.format(java.util.Calendar.getInstance().getTime());
             //String utcTime = dateFormat.format(java.util.Calendar.getInstance(utcTimeZone).getTime());
-            String localTime = "local: " + java.util.Calendar.getInstance().getTime();
-            String utcTime = "  utc: " + java.util.Calendar.getInstance(utcTimeZone).getTime(); //TODO Do not set UCT time
+            String localTime = "local: " + calendar.getTime();
+            calendar.setTimeZone(utcTimeZone);
+            String utcTime = "  utc: " + calendar.getTime(); //TODO Do not set UCT time
 
             String jid = gridAlgorithm.getGridLocation(location);
             String lat = "lat: " + location.getLatitude();

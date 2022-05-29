@@ -1,4 +1,0 @@
-https://www.google.com/search?q=android+change+icons+day+night+theme+programmatically
-https://stackoverflow.com/questions/18001551/day-night-theme-for-android-app
-https://developer.android.com/guide/topics/ui/look-and-feel/darktheme
-https://www.geeksforgeeks.org/how-to-change-app-icon-of-android-programmatically-in-android/
