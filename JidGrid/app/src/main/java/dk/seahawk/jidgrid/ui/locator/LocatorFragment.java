@@ -216,7 +216,7 @@ public class LocatorFragment extends Fragment implements LocationListener {
             TimeZone utcTimeZone = TimeZone.getTimeZone("Etc/UCT");
             Calendar calendar = java.util.Calendar.getInstance();
             //TODO Format time
-            //SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a dd-MM-yyyy");
+            //SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss a dd-MM-yyyy");
             //String localTime = dateFormat.format(java.util.Calendar.getInstance().getTime());
             //String utcTime = dateFormat.format(java.util.Calendar.getInstance(utcTimeZone).getTime());
             String localTime = "local: " + calendar.getTime();
