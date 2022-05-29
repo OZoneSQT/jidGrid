@@ -30,7 +30,12 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.DateFormat;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 import dk.seahawk.jidgrid.R;
@@ -213,15 +218,25 @@ public class LocatorFragment extends Fragment implements LocationListener {
 
     private void setPlaceholderItem(Location location) {
         if(location != null) {
-            TimeZone utcTimeZone = TimeZone.getTimeZone("Etc/UCT");
-            Calendar calendar = java.util.Calendar.getInstance();
-            //TODO Format time
-            //SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a dd-MM-yyyy");
-            //String localTime = dateFormat.format(java.util.Calendar.getInstance().getTime());
-            //String utcTime = dateFormat.format(java.util.Calendar.getInstance(utcTimeZone).getTime());
-            String localTime = "local: " + calendar.getTime();
-            calendar.setTimeZone(utcTimeZone);
-            String utcTime = "  utc: " + calendar.getTime(); //TODO Do not set UCT time
+            String dateTimeFormat = "HH:mm:ssZZ dd/mm/yyyy";
+            String utc = "Etc/UTC"; // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+            String localTime, utcTime;
+
+            // NOTE: minimum SDK 26 / Android 8.0
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateTimeFormat);  // API level 26
+                ZonedDateTime currentTimeLocal = ZonedDateTime.now();                               // API level 26
+                ZonedDateTime currentTimeUTC = currentTimeLocal.withZoneSameLocal(ZoneId.of(utc));  // API level 26
+
+                localTime = "local:" + dateTimeFormatter.format(currentTimeLocal);
+                utcTime = "  utc:" + dateTimeFormatter.format(currentTimeUTC);
+            } else {
+                TimeZone utcTimeZone = TimeZone.getTimeZone(utc);
+                Calendar calendar = java.util.Calendar.getInstance();              // API level 1
+
+                localTime = getTimeLocal(calendar);
+                utcTime = getTimeUTC(calendar, utcTimeZone);
+            }
 
             String jid = gridAlgorithm.getGridLocation(location);
             String lat = "lat: " + location.getLatitude();
@@ -233,6 +248,20 @@ public class LocatorFragment extends Fragment implements LocationListener {
         } else {
             Log.d(TAG, "PlaceholderItem is not sent to RecyclerView/History, Location = null");
         }
+    }
+
+    private String dateBuilder(Calendar calendar){
+        Date date = calendar.getTime();
+        return date.getMinutes() + ":" + date.getMinutes() + ":" + date.getMinutes() + " " + DateFormat.getDateInstance().format(date);
+    }
+
+    private String getTimeLocal(Calendar calendar) {
+        return "local:" + dateBuilder(calendar);
+    }
+
+    private String getTimeUTC(Calendar calendar, TimeZone utcTimeZone) {
+        calendar.setTimeZone(utcTimeZone);
+        return "  utc:" + dateBuilder(calendar);
     }
 
 }
