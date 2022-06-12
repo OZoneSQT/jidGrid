@@ -63,4 +63,11 @@ public class HistoryFragment extends Fragment {
         }
         return view;
     }
+
+    //TODO Create function to share selected data:
+    // 1. Add an interface to adapter, for listener.
+    // 2. Add a field to Adapter to store reference of listener and update constructor.
+    // 3. Implement listener in MainActivity
+    // 4. Add a method to send selected items via email/sms, OBS!!! ( permissions, access to user-data )
+
 }

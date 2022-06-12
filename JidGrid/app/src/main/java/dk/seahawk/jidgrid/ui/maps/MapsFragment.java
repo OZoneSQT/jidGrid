@@ -28,6 +28,10 @@ import com.google.android.gms.maps.model.LatLng;
 
 import dk.seahawk.jidgrid.R;
 
+//TODO Alternative solution (To save cost on API calls):
+//     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:" + location.getLongitude() + "," + location.getLatitude() ));
+//     startActivity(intent);
+
 // https://stackoverflow.com/questions/18532581/how-to-retrieve-current-device-location-show-it-on-map-fragment-in-a-fragment
 // https://medium.com/@bariskarapinar/location-updates-implementing-google-maps-fragment-android-app-d83a0b2d9914
 public class MapsFragment extends Fragment implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
@@ -91,6 +95,7 @@ public class MapsFragment extends Fragment implements ConnectionCallbacks, OnCon
         locationRequest.setPriority(priority);
     }
 
+    @SuppressLint("VisibleForTests")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

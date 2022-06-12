@@ -6,6 +6,8 @@ import java.util.List;
 public class LocationHistory {
     // https://stackoverflow.com/questions/18393600/android-singleton-becomes-null
 
+    //TODO Read/Write object to memory, Permissions
+    // Settings stored via object / userinfo in shared preferences (Settings menu)
     public static List<PlaceholderItem> items = new ArrayList<>();
 
     // Create instance
