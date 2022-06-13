@@ -250,6 +250,11 @@ public class LocatorFragment extends Fragment implements LocationListener {
         }
     }
 
+    /*
+        The IDE suggest to use Calendar.get(Calendar.MINUTE) ect. but I am not interested
+        in the current/updated time, i want to use the same instance in multiply methods
+        It would be preferable to use DateTimeFormatter, but it is first available from API level 26
+     */
     private String dateBuilder(Calendar calendar){
         Date date = calendar.getTime();
         return date.getMinutes() + ":" + date.getMinutes() + ":" + date.getMinutes() + " " + DateFormat.getDateInstance().format(date);
