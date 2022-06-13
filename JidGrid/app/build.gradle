@@ -29,13 +29,22 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    // Enable Android studio to detect JUnit tests due to compiler error; compiler do not as default rerun tests
+    // https://www.lordcodes.com/articles/testing-on-android-using-junit-5
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
+
 }
 
 dependencies {
 
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.6.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
@@ -43,7 +52,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.4.2'
     implementation 'androidx.navigation:navigation-ui:2.4.2'
 
-    implementation 'com.google.android.gms:play-services-location:19.0.1'
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
@@ -54,15 +63,15 @@ dependencies {
     // testImplementation 'junit:junit:4.13.2'
 
     // Required, the core dependencies
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.1"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.8.1"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.2"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.8.2"
 
     // Optional, if you need Parameterized Tests
-    testImplementation "org.junit.jupiter:junit-jupiter-params:5.8.1"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.8.2"
 
     // Optional, if you plan on keeping your existing JUnit 4 based tests.
     // It provides a TestEngine for running v3 and v4 based tests on the v5 platform.
-    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.8.1"
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.8.2"
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

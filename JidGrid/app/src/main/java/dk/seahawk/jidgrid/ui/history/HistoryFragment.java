@@ -27,7 +27,6 @@ public class HistoryFragment extends Fragment {
     }
 
     // Parameter initialization
-    @SuppressWarnings("unused")
     public static HistoryFragment newInstance(int columnCount) {
         HistoryFragment fragment = new HistoryFragment();
         Bundle args = new Bundle();
